@@ -17,6 +17,7 @@
         android:id="@+id/userimg"
         android:layout_below="@+id/toolbar"/>
     <TextView
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/userimg"
@@ -24,15 +25,107 @@
         android:text="Name"
         android:layout_alignTop="@id/userimg"/>
     <TextView
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/name"
         android:layout_toRightOf="@id/userimg"
         android:text="EmailAddress"/>
-    <ListView
+
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/current_uni_lo"
+    android:layout_below="@+id/userimg"
+    android:orientation="vertical"
+        android:layout_alignLeft="@+id/userimg">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="Current University"
+        android:id="@+id/current_uni_head"
+        />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add186" />
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/current_uni_head"
+        android:layout_alignLeft="@id/userimg"
+        android:id="@+id/current_uni_list"
         ></ListView>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/past_uni_lo"
+        android:layout_alignLeft="@id/userimg"
+        android:layout_below="@+id/current_uni_lo"
+        >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="Past Universities"
+        android:id="@+id/past_uni_head"
+        />
+    <ImageButton
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/add_past_uni"
+        android:src="@drawable/add186" />
+        </LinearLayout>
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/past_uni_list"
+        android:layout_alignLeft="@id/userimg"
+        android:layout_below="@id/past_uni_head"></ListView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/past_uni_lo"
+        android:orientation="vertical"
+        android:layout_alignLeft="@id/userimg">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/userimg"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="Favourite Universities"
+        android:id="@+id/fave_uni_head"/>
+            <ImageButton
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/add_fave_uni"
+            android:src="@drawable/add186" />
+
+        </LinearLayout>
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fave_uni_head"
+
+        android:id="@+id/fave_uni_list"></ListView>
+    </LinearLayout>
 
     
 

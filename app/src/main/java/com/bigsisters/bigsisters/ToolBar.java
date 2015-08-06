@@ -30,6 +30,7 @@ public class ToolBar extends Fragment {
     private ImageButton mHomeButton;
 
 
+
     public static ToolBar newInstance(String param1, String param2) {
         ToolBar fragment = new ToolBar();
         Bundle args = new Bundle();
