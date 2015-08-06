@@ -2,15 +2,18 @@ package com.bigsisters.bigsisters;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 //import android.widget.Toolbar;
 
 
@@ -24,6 +27,7 @@ import android.view.ViewGroup;
  */
 public class ToolBar extends Fragment {
     private Toolbar mToolBar;
+    private ImageButton mHomeButton;
 
 
     public static ToolBar newInstance(String param1, String param2) {
@@ -54,19 +58,37 @@ public class ToolBar extends Fragment {
 
         mToolBar = (Toolbar) v.findViewById(R.id.my_toolbar);
         // Set an OnMenuItemClickListener to handle menu item clicks
+        mToolBar.inflateMenu(R.menu.my_toolbar_menu);
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                // Handle the menu item
+                switch (item.getItemId()) {
+                    case R.id.profile:
+                        Intent intent = new Intent(getActivity(), UserProfile.class);
+                        startActivity(intent);
+                        return true;
+                }
+
+
                 return true;
+            }
+        });
+        mHomeButton = (ImageButton) v.findViewById(R.id.home_button);
+        mHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                startActivity(intent);
+
             }
         });
 
         // Inflate a menu to be displayed in the toolbar
-        mToolBar.inflateMenu(R.menu.my_toolbar_menu);
+
         ActionBarActivity activity = (ActionBarActivity) this.getActivity();
-        activity.setSupportActionBar(mToolBar);
+        //activity.setSupportActionBar(mToolBar);
         //GetActivity().setSupportActionBar(toolbar);
+
         return v;
 
     }
