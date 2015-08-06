@@ -1,6 +1,7 @@
 package com.bigsisters.bigsisters;
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v4.app.FragmentActivity;
 
@@ -19,6 +21,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +67,8 @@ public class UniversityActivity extends FragmentActivity {
                 tvName.setText(university.getName());
                 TextView tvLocation = (TextView) findViewById(R.id.uniLocation);
                 tvLocation.setText(university.getName());
+
+                setupImage(university.getPhotoUrl());
             }
 
             @Override
@@ -164,8 +169,13 @@ public class UniversityActivity extends FragmentActivity {
         transaction.addToBackStack(null);
         transaction.commit();
         Log.d("stefania", "fragments have been switched");
+    }
 
-
+    public void setupImage(String url) {
+        Log.d("stefania", "image url " + url);
+        String url2 = "http://www.educationabroadnetwork.org/site/galleries/8_458.jpg";
+        ImageView imageView = (ImageView) findViewById(R.id.uniPic);
+        Picasso.with(this).load(url).into(imageView);
     }
 
 }
