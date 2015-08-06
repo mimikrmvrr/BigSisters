@@ -22,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         logoAnimation();
-        //b = (Button)
+        //b = (Button)R.id.
 
 
     }
