@@ -10,6 +10,14 @@ public class University {
     String websiteUrl;
     String photoUrl;
 
+    public University() {
+        id = 0;
+        name = null;
+        location = null;
+        websiteUrl = null;
+        photoUrl = null;
+    }
+
     // get and set methods
     public int getId() {
         return id;
@@ -43,4 +51,7 @@ public class University {
         this.photoUrl = photoUrl;
     }
 
+    public String toString() {
+        return id + " " + name + " " + location + " " + websiteUrl + " " + photoUrl;
+    }
 }
