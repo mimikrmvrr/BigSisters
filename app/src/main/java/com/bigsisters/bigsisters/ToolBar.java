@@ -1,9 +1,11 @@
 package com.bigsisters.bigsisters;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -62,7 +64,7 @@ public class ToolBar extends Fragment {
 
         // Inflate a menu to be displayed in the toolbar
         mToolBar.inflateMenu(R.menu.my_toolbar_menu);
-        HomeActivity activity = (HomeActivity) this.getActivity();
+        ActionBarActivity activity = (ActionBarActivity) this.getActivity();
         activity.setSupportActionBar(mToolBar);
         //GetActivity().setSupportActionBar(toolbar);
         return v;
