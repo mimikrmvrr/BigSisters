@@ -104,7 +104,7 @@ public class HomeActivity extends ActionBarActivity {
 
     private class TabsAdapter extends FragmentStatePagerAdapter {
 
-        private static final int TABS_COUNT = 2;
+        private final String[] tabs = {"NEWS", "Q&A"};
 
         public TabsAdapter(FragmentManager fm) {
             super(fm);
@@ -112,22 +112,21 @@ public class HomeActivity extends ActionBarActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new Fragment();
+            if (position == 0) {
+                return new HomeFragment();
+            }
+            return new QuestionsFragment();
         }
 
         @Override
         public int getCount() {
-            return TABS_COUNT;
+            return tabs.length;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position == 0) {
-                return "NEWS";
-            }
-            return "Q&A";
+            return tabs[position];
         }
-
     }
 
     @Override
@@ -138,30 +137,7 @@ public class HomeActivity extends ActionBarActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new TabsAdapter(getSupportFragmentManager()));
-
-        Firebase.setAndroidContext(this);
-        final Firebase postsRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Posts");
-
-        final ListView list = (ListView) findViewById(R.id.posts);
-
-        postsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                ArrayList<Post> posts = new ArrayList<>();
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    posts.add(child.getValue(Post.class));
-                }
-
-                PostsAdapter adapter = new PostsAdapter();
-                adapter.setPosts(posts);
-                list.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-        });
+        
     }
 
     @Override
