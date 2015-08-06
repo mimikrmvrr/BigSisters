@@ -3,10 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:name="com.bigsisters.bigsisters.ToolBar"/>
 
     <ListView
         android:id="@+id/posts"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"></ListView>
 
 </RelativeLayout>
