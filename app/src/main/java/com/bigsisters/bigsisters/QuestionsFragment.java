@@ -1,7 +1,9 @@
 package com.bigsisters.bigsisters;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +78,17 @@ public class QuestionsFragment extends Fragment {
 
             viewHolder.time.setText(question.getTime());
             viewHolder.about.setText(question.getAbout());
+
+            layout.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("mimi", "Click on question is made");
+                            Intent intent = new Intent(getActivity(), QuestionActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+            );
 
             return layout;
         }
