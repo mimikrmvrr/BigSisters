@@ -106,8 +106,8 @@ public class QuestionsFragment extends Fragment {
         // Inflate the layout for this fragment
         final ListView list = (ListView) inflater.inflate(R.layout.questions_list, container, false);
         Firebase.setAndroidContext(getActivity());
-        final Firebase postsRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Questions");
-        postsRef.addValueEventListener(new ValueEventListener() {
+        final Firebase questionsRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Questions");
+        questionsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 ArrayList<Question> questions = new ArrayList<>();
