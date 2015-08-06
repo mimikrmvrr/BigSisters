@@ -46,7 +46,7 @@ public class ToolBar extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_tool_bar, null);
 
-        mToolBar = new ToolBar();
+
 
         return v;
 
