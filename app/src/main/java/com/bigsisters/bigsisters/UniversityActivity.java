@@ -3,6 +3,7 @@ package com.bigsisters.bigsisters;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -38,12 +39,16 @@ public class UniversityActivity extends FragmentActivity {
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_university);
 
+
+
         // Obtaining the university data
         Intent i = getIntent();
         String id = i.getStringExtra(UniversityActivity.EXTRA_ID);
         university.setId(Integer.parseInt(id));
         String fbUrl = "https://blazing-torch-4222.firebaseio.com/Universities/" + id;
         Firebase uniRoot = new Firebase(fbUrl);
+        Log.d("stefania", "Firebase: " + fbUrl);
+        university.setId(Integer.parseInt(id));
         // TODO: make sure university exists
         uniRoot.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -52,13 +57,13 @@ public class UniversityActivity extends FragmentActivity {
                 university.setLocation((String) dataSnapshot.child("location").getValue());
                 university.setWebsiteUrl((String) dataSnapshot.child("website").getValue());
                 university.setPhotoUrl((String) dataSnapshot.child("univPhotoUrl").getValue());
+                university.setInfo((String) dataSnapshot.child("info").getValue());
 
                 // Showing the data
                 TextView tvName = (TextView) findViewById(R.id.uniName);
                 tvName.setText(university.getName());
                 TextView tvLocation = (TextView) findViewById(R.id.uniLocation);
                 tvLocation.setText(university.getName());
-
             }
 
             @Override
@@ -68,7 +73,16 @@ public class UniversityActivity extends FragmentActivity {
             }
         });
 
-
+        // Setting up the first fragment
+        if (findViewById(R.id.fragment_container) != null) {
+            if (savedInstanceState != null) { return;}
+            Bundle args = new Bundle();
+            Log.d("stefania", "argument id is " +university.id);
+            args.putInt("id", university.id);
+            UnivInfoFragment startFragment = new UnivInfoFragment();
+            startFragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, startFragment).commit();
+        }
 
         // Opening the website
         Button webButton = (Button) findViewById(R.id.uniUrl);
@@ -86,12 +100,7 @@ public class UniversityActivity extends FragmentActivity {
             }
         });
 
-        // Setting up the first fragment
-        if (findViewById(R.id.fragment_container) != null) {
-            if (savedInstanceState != null) { return;}
-            UnivInfoFragment startFragment = new UnivInfoFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, startFragment).commit();
-        }
+
 
         // Setting up the fragment switching buttons
         Button btn1 = (Button) findViewById(R.id.button1);
@@ -155,6 +164,7 @@ public class UniversityActivity extends FragmentActivity {
         transaction.addToBackStack(null);
         transaction.commit();
         Log.d("stefania", "fragments have been switched");
+
 
     }
 
