@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+//import android.widget.Toolbar;
 
 
 /**
@@ -19,7 +21,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ToolBar extends Fragment {
-    private ToolBar mToolBar;
+    private Toolbar mToolBar;
+
 
     public static ToolBar newInstance(String param1, String param2) {
         ToolBar fragment = new ToolBar();
@@ -47,9 +50,29 @@ public class ToolBar extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tool_bar, null);
 
 
+        mToolBar = (Toolbar) v.findViewById(R.id.my_toolbar);
+        // Set an OnMenuItemClickListener to handle menu item clicks
+        mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                // Handle the menu item
+                return true;
+            }
+        });
 
+        // Inflate a menu to be displayed in the toolbar
+        mToolBar.inflateMenu(R.menu.my_toolbar_menu);
+        MainActivity activity = (MainActivity) this.getActivity();
+        activity.setSupportActionBar(mToolBar);
+        //GetActivity().setSupportActionBar(toolbar);
         return v;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mToolBar.setTitle("");
     }
 
     // TODO: Rename method, update argument and hook method into UI event

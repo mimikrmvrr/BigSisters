@@ -3,9 +3,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     <fragment
-        android:id="@+id/tbfrag"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:name="com.bigsisters.bigsisters.ToolBar"/>
+        android:name="com.bigsisters.bigsisters.ToolBar"
+        android:id="@+id/frag"/>
 
 </RelativeLayout>
