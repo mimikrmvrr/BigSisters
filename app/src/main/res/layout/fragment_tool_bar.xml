@@ -6,7 +6,9 @@
         android:id="@+id/my_toolbar"
         android:layout_height="?actionBarSize"
         android:layout_width="match_parent"
-        android:background="?colorAccent">
+        android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+        android:background="?colorAccent"
+        >
         <ImageButton
             android:layout_width="?actionBarSize"
             android:layout_height="?actionBarSize"
@@ -25,7 +27,6 @@
             android:id="@+id/msg_button"
             android:src="@drawable/email5"
             android:background="?colorAccent"/>
-
 
 
     </android.support.v7.widget.Toolbar>

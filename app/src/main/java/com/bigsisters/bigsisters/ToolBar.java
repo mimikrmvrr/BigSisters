@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +55,7 @@ public class ToolBar extends Fragment {
 
         mToolBar = (Toolbar) v.findViewById(R.id.my_toolbar);
         // Set an OnMenuItemClickListener to handle menu item clicks
+        mToolBar.inflateMenu(R.menu.my_toolbar_menu);
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -63,10 +65,12 @@ public class ToolBar extends Fragment {
         });
 
         // Inflate a menu to be displayed in the toolbar
-        mToolBar.inflateMenu(R.menu.my_toolbar_menu);
+
+        Log.d("test1", "menu currently is" + mToolBar.getMenu().size());
         ActionBarActivity activity = (ActionBarActivity) this.getActivity();
-        activity.setSupportActionBar(mToolBar);
+        //activity.setSupportActionBar(mToolBar);
         //GetActivity().setSupportActionBar(toolbar);
+
         return v;
 
     }

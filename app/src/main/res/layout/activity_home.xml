@@ -7,7 +7,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
-        android:name="com.bigsisters.bigsisters.ToolBar"/>
+        android:name="com.bigsisters.bigsisters.ToolBar" />
 
     <ListView
         android:id="@+id/posts"
