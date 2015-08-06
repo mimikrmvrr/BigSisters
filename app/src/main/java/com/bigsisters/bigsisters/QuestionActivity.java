@@ -38,7 +38,7 @@ public class QuestionActivity extends ActionBarActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 Question question = snapshot.getValue(Question.class);
                 title.setText(question.getTitle());
-                about.setText(question.getText());
+                about.setText(question.getAbout());
                 text.setText(question.getText());
                 from.setText(question.getFrom());
                 answer.setText(question.getAnswer());

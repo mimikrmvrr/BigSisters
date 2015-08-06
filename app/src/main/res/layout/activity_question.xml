@@ -8,26 +8,32 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:layout_margin="20dp"/>
 
     <TextView
         android:id="@+id/about"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp" />
 
     <TextView
         android:id="@+id/text"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"/>
 
     <TextView
         android:id="@+id/from"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"/>R
 
     <TextView
         android:id="@+id/answer"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"/>
 
 </LinearLayout>
