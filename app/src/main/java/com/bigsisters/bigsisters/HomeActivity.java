@@ -57,20 +57,17 @@ public class HomeActivity extends ActionBarActivity {
 
         @Override
         public LinearLayout getView(int position, View convertView, ViewGroup parent) {
-            Log.d("mimi", "getView");
             LinearLayout postLayout;
             RelativeLayout postHeaderLayout;
             ViewHolder viewHolder;
 
             if (convertView != null) {
-                Log.d("mimi", "convert view");
                 postLayout = (LinearLayout) convertView;
                 viewHolder = (ViewHolder) postLayout.getTag();
             } else {
                 LayoutInflater postInflater = LayoutInflater.from(HomeActivity.this);
                 postLayout = (LinearLayout) postInflater.inflate(R.layout.post, null);
-              //  LayoutInflater postHeaderInflater = LayoutInflater.from(HomeActivity.this);
-                postHeaderLayout = (RelativeLayout) postLayout.findViewById(R.id.post_header); //postInflater.inflate(R.layout.post_header, null);
+                postHeaderLayout = (RelativeLayout) postLayout.findViewById(R.id.post_header);
 
                 //create ViewHolder
                 viewHolder = new ViewHolder();
@@ -79,10 +76,8 @@ public class HomeActivity extends ActionBarActivity {
                 viewHolder.pic = (ImageView) postHeaderLayout.findViewById(R.id.pic);
                 viewHolder.post_content = (TextView) postLayout.findViewById(R.id.post_content);
                 postLayout.setTag(viewHolder);
-                Log.d("mimi", "create new view");
             }
 
-            Log.d("mimi", "set text");
             Post post = getItem(position);
             if (viewHolder.name != null) {
                 viewHolder.name.setText(post.getName());
@@ -90,9 +85,8 @@ public class HomeActivity extends ActionBarActivity {
             viewHolder.time.setText(post.getTime());
             viewHolder.post_content.setText(post.getText());
             Picasso.with(getApplicationContext()).load(post.getPicUrl()).into(viewHolder.pic);
-            Log.d("mimi", "everything is ok");
-            return postLayout;
 
+            return postLayout;
         }
 
         public void setPosts(List<Post> posts) {
