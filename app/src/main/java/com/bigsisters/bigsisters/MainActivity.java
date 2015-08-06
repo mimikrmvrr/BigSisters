@@ -1,10 +1,12 @@
 package com.bigsisters.bigsisters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -22,11 +24,22 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         logoAnimation();
-        //b = (Button)R.id.
-
+        goHome();
 
     }
 
+    //navigate from conuinue without login to home screen
+    void goHome(){
+        b = (Button)findViewById(R.id.nologin);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(loginIntent);
+
+            }
+        });
+    }
     //animate logo, animation is in anim fade_in.xml
     void logoAnimation() {
         ImageView image;
@@ -52,9 +65,9 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
