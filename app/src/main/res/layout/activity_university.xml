@@ -10,23 +10,69 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/uniPic"
+            android:src="@drawable/home168"
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:layout_centerHorizontal="true"/>
+
         <TextView
             android:id="@+id/uniName"
-            android:text="dummy text"
+            android:text="Loading ..."
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/uniPic"
+            android:textSize="40dp"/>
         <TextView
             android:id="@+id/uniLocation"
-            android:text="dummy location"
+            android:text="Loading ..."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/uniName"/>
+            android:layout_below="@id/uniName"
+            android:textSize="25dp"/>
+
         <Button
             android:id="@+id/uniUrl"
-            android:text="webiste"
+            android:text="website"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/uniLocation"/>
+            android:layout_below="@id/uniLocation"
+            android:textSize="25dp"
+            />
+        <LinearLayout
+            android:id="@+id/buttonGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_below="@id/uniUrl">
+
+            <Button
+                android:id="@+id/button1"
+                android:text="Info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/button2"
+                android:text="Rating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/button3"
+                android:text="More stuff"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/buttonGroup"/>
 
     </RelativeLayout>
 

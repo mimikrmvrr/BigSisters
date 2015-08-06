@@ -2,6 +2,8 @@ package com.bigsisters.bigsisters;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.support.v4.app.FragmentActivity;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -23,8 +26,9 @@ import java.util.Map;
 * Displays info on university
 * Started by an intent that includes the univeristy ID
 * */
-public class UniversityActivity extends ActionBarActivity {
+public class UniversityActivity extends FragmentActivity {
 
+    int currentFragment = 0;
     University university = new University();
     static final String EXTRA_ID = "com.bigsister.EXTRA_ID";
 
@@ -40,7 +44,6 @@ public class UniversityActivity extends ActionBarActivity {
         university.setId(Integer.parseInt(id));
         String fbUrl = "https://blazing-torch-4222.firebaseio.com/Universities/" + id;
         Firebase uniRoot = new Firebase(fbUrl);
-        Log.d("stefania", fbUrl);
         // TODO: make sure university exists
         uniRoot.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -49,7 +52,6 @@ public class UniversityActivity extends ActionBarActivity {
                 university.setLocation((String) dataSnapshot.child("location").getValue());
                 university.setWebsiteUrl((String) dataSnapshot.child("website").getValue());
                 university.setPhotoUrl((String) dataSnapshot.child("univPhotoUrl").getValue());
-                Log.d("stefania", "University: " + university.toString());
 
                 // Showing the data
                 TextView tvName = (TextView) findViewById(R.id.uniName);
@@ -83,6 +85,29 @@ public class UniversityActivity extends ActionBarActivity {
 
             }
         });
+
+        // Setting up the first fragment
+        if (findViewById(R.id.fragment_container) != null) {
+            if (savedInstanceState != null) { return;}
+            UnivInfoFragment startFragment = new UnivInfoFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, startFragment).commit();
+        }
+
+        // Setting up the fragment switching buttons
+        Button btn1 = (Button) findViewById(R.id.button1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {switchTabs(0);}
+        });
+        Button btn2 = (Button) findViewById(R.id.button2);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {switchTabs(1);}
+        });
+        Button btn3 = (Button) findViewById(R.id.button3);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {switchTabs(2);}
+        });
+
+
     }
 
     @Override
@@ -105,6 +130,32 @@ public class UniversityActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void switchTabs(int pos) {
+        Log.d("stefania", "running fragment switcher " + pos);
+        // check what fragment is currently active
+        if (pos == currentFragment) return;
+        // if it is different from the current one, switch
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        switch(pos) {
+            case 0:
+                UnivInfoFragment iFragment = new UnivInfoFragment();
+                transaction.replace(R.id.fragment_container, iFragment);
+                currentFragment = 0;
+                break;
+            case 1:
+                RatingFragment rFragment = new RatingFragment();
+                transaction.replace(R.id.fragment_container, rFragment);
+                currentFragment = 1;
+                break;
+            default: return;
+
+        }
+        transaction.addToBackStack(null);
+        transaction.commit();
+        Log.d("stefania", "fragments have been switched");
+
     }
 
 }
