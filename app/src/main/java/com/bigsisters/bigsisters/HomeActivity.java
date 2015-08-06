@@ -1,6 +1,12 @@
 package com.bigsisters.bigsisters;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -96,10 +102,43 @@ public class HomeActivity extends ActionBarActivity {
 
     }
 
+    private class TabsAdapter extends FragmentStatePagerAdapter {
+
+        private static final int TABS_COUNT = 2;
+
+        public TabsAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return new Fragment();
+        }
+
+        @Override
+        public int getCount() {
+            return TABS_COUNT;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position == 0) {
+                return "NEWS";
+            }
+            return "Q&A";
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(new TabsAdapter(getSupportFragmentManager()));
+
         Firebase.setAndroidContext(this);
         final Firebase postsRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Posts");
 
@@ -123,8 +162,6 @@ public class HomeActivity extends ActionBarActivity {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
-
-
     }
 
     @Override
