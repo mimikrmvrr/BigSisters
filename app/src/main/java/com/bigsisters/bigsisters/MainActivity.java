@@ -5,16 +5,36 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.support.v7.widget.Toolbar;
 
 
-public class MainActivity extends ActionBarActivity {
 
+public class MainActivity extends ActionBarActivity {
+    Animation animFadeIn;
+    Button b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        logoAnimation();
+        //b = (Button)
+
+
+    }
+
+    //animate logo, animation is in anim fade_in.xml
+    void logoAnimation() {
+        ImageView image;
+        image = (ImageView)findViewById(R.id.logo);
+        // load the animation
+        animFadeIn = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.fade_in);
+        image.startAnimation(animFadeIn);
     }
 
     @Override
