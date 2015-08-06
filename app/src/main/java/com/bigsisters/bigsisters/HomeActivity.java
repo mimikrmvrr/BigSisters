@@ -137,7 +137,7 @@ public class HomeActivity extends ActionBarActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new TabsAdapter(getSupportFragmentManager()));
-        
+
     }
 
     @Override
