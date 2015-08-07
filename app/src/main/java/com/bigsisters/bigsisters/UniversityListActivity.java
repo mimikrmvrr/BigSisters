@@ -39,8 +39,7 @@ public class UniversityListActivity extends ActionBarActivity {
                 // do things
                 Intent i = new Intent(UniversityListActivity.this, UniversityActivity.class);
                 Random r = new Random();
-                if (r.nextBoolean())i.putExtra(UniversityActivity.EXTRA_ID, "1");
-                else i.putExtra(UniversityActivity.EXTRA_ID, "0");
+                i.putExtra(UniversityActivity.EXTRA_ID, Integer.toString(r.nextInt() % 3));
                 startActivity(i);
 
             }
