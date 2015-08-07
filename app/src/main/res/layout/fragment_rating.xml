@@ -20,12 +20,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:text="Attribute"/>
+                android:textSize="30dp"
+            android:text="@string/att0"/>
             <TextView
                 android:id="@+id/grade0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textSize="30dp"
                 android:text="..."/>
 
         </LinearLayout>
@@ -40,13 +42,15 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:text="Attribute"/>
+                android:textSize="30dp"
+                android:text="@string/att1"/>
 
             <TextView
                 android:id="@+id/grade1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textSize="30dp"
                 android:text="..."/>
 
         </LinearLayout>
@@ -61,14 +65,17 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:text="Attribute"/>
+                android:textSize="30dp"
+                android:text="@string/att2"/>
 
             <TextView
                 android:id="@+id/grade2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textSize="30dp"
                 android:text="..."/>
+
 
         </LinearLayout>
         <LinearLayout
@@ -82,11 +89,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:text="Attribute"/>
+                android:textSize="30dp"
+                android:text="@string/att3"/>
 
             <TextView
                 android:id="@+id/grade3"
                 android:layout_width="0dp"
+                android:textSize="30dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="..."/>

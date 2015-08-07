@@ -125,16 +125,27 @@ public class EditRatingFragment extends Fragment {
                 // Then upgrade university
                 Firebase uniRatings = new Firebase(uniUrl);
                 for (int i = 0; i < 4; i++) {
-                    Log.d("stefania", "grades updated at " + uniUrl);
-                    if (oldRating[0] == 0) {
-                        if (oldVotes[0] == 0) uniRating.child("att"+i).child("grade").setValue(newRating[i]);
-                        else uniRating.child("att"+i).child("grade").setValue((oldRating[i] * oldVotes[i] + newRating[i]) / (1+oldVotes[i]));
+                    Log.d("stefania", "grades updating at " + uniUrl);
+                    if (newRating[i] == oldRating[i]) {}
+                    else if (oldRating[0] == 0) {
+                        Log.d("stefania", "new Vote " +newRating[i]);
+                        if (oldVotes[i] == 0) uniRating.child("att"+i).child("grade").setValue(newRating[i]);
+                        else uniRating.child("att"+i).child("grade").setValue((oldUniRating[i] * oldVotes[i] + newRating[i]) / (1.0 * (1+oldVotes[i])));
                         uniRating.child("att"+i).child("votes").setValue(oldVotes[i] + 1);
                     }
+                    else if (newRating[i] == 0) {
+                        Log.d("stefania", "vote removed");
+                        if(oldVotes[i] == 1) uniRating.child("att"+i).child("grade").setValue(0);
+                        else uniRating.child("att"+i).child("grade").setValue((oldUniRating[i] * oldVotes[i] - newRating[i]) / (1+oldVotes[i]));
+                        uniRating.child("att"+i).child("votes").setValue(oldVotes[i] - 1);
+                    }
                     else {
+                        Log.d("stefania", "modified vote");
                         uniRating.child("att"+i).child("grade").setValue(oldUniRating[i] + (newRating[i] - oldRating[i]) / oldVotes[i]);
                     }
 
+                    UniversityActivity parent = (UniversityActivity) getActivity();
+                    //parents.switchTabs(1);
                 }
 
 
