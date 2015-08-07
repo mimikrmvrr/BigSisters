@@ -78,8 +78,10 @@ public class QuestionActivity extends ActionBarActivity {
 
             Answer answer = getItem(position);
             viewHolder.text.setText(answer.getText());
-            viewHolder.time.setText(answer.getTime());
-            viewHolder.from.setText(answer.getFrom());
+            viewHolder.time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(answer.getTime())));
+            //viewHolder.time.setText(answer.getTime());
+            loadUserName(answer.getFrom(), viewHolder.from);
+           // viewHolder.from.setText(answer.getFrom());
 
             return layout;
         }
