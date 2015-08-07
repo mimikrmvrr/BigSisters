@@ -113,7 +113,18 @@ public class QuestionActivity extends ActionBarActivity {
         questionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                Question question = snapshot.getValue(Question.class);
+                List<Answer> answers = new ArrayList<>();
+                for(DataSnapshot answerSnapshot : snapshot.child("answer").getChildren()) {
+                    answers.add(answerSnapshot.getValue(Answer.class));
+                }
+                Question question = new Question();
+                question.setAbout(snapshot.child("about").getValue(String.class));
+                question.setFrom(snapshot.child("from").getValue(String.class));
+                question.setText(snapshot.child("text").getValue(String.class));
+                question.setTime(snapshot.child("time").getValue(String.class));
+                question.setTitle(snapshot.child("title").getValue(String.class));
+                question.setAnswer(answers);
+                //Question question = snapshot.getValue(Question.class);
                 title.setText(question.getTitle());
                 loadUniversityName(question.getAbout(), about);
                 text.setText(question.getText());
