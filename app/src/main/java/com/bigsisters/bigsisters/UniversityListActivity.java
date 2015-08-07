@@ -13,6 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.Random;
+
 
 public class UniversityListActivity extends ActionBarActivity {
 
@@ -36,7 +38,9 @@ public class UniversityListActivity extends ActionBarActivity {
                                     long id) {
                 // do things
                 Intent i = new Intent(UniversityListActivity.this, UniversityActivity.class);
-                i.putExtra(UniversityActivity.EXTRA_ID, "1");
+                Random r = new Random();
+                if (r.nextBoolean())i.putExtra(UniversityActivity.EXTRA_ID, "1");
+                else i.putExtra(UniversityActivity.EXTRA_ID, "0");
                 startActivity(i);
 
             }
@@ -79,7 +83,7 @@ public class UniversityListActivity extends ActionBarActivity {
                 //no reuse - create new textView
                 tv = new TextView(UniversityListActivity.this);
 
-                tv.setTextSize(22);
+                tv.setTextSize(35);
                 tv.setPadding(16, 16, 16, 16);
             }
             else {

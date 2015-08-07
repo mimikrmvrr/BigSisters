@@ -193,11 +193,11 @@ public class UniversityActivity extends FragmentActivity {
     }
 
     public void setupImage(String url) {
-        Log.d("stefania", "image url " + url);
-        String url2 = "http://www.educationabroadnetwork.org/site/galleries/8_458.jpg";
+        //Log.d("stefania", "image url " + url);
+        //String url2 = "http://www.educationabroadnetwork.org/site/galleries/8_458.jpg";
         ImageView imageView = (ImageView) findViewById(R.id.uniPic);
-        //Picasso.with(this).load(url).into(imageView);
-        Picasso.with(this).load(url).placeholder(R.id.uniPic).into(imageView);
+        Picasso.with(this).load(url).into(imageView);
+        //Picasso.with(this).load(url).placeholder(R.id.uniPic).into(imageView);
     }
 
     public void attendedThisUni(final int studentID, final int uniID) {
@@ -239,7 +239,7 @@ public class UniversityActivity extends FragmentActivity {
                 } else {
                     // activate fave button
                     faveButton.setText("Fave");
-                    faveButton.setBackgroundColor(android.graphics.Color.GREEN);
+                    faveButton.setBackgroundColor(Color.GRAY);
                     // deactivate rate button
                     //rateButton.setVisibility(View.INVISIBLE);
                 }
