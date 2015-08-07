@@ -97,12 +97,17 @@ public class QuestionsFragment extends Fragment {
             this.questions = questions;
         }
 
-        private void loadUniversityName(String id, final TextView name) {
+        private void loadUniversityName(final String id, final TextView name) {
             final Firebase universityRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Universities/" + id + "/univName");
             universityRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    name.setText(dataSnapshot.getValue(String.class));
+                    String universityName = dataSnapshot.getValue(String.class);
+
+                    if (universityName == null || universityName.isEmpty()) {
+                        universityName = "General";
+                    }
+                    name.setText(universityName);
                 }
 
                 @Override
