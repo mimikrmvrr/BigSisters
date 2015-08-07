@@ -38,6 +38,7 @@ public class UniversityActivity extends FragmentActivity {
     int currentFragment = 0;
     University university = new University();
     boolean isStudent = false;
+    String userId = null;
 
     static final String EXTRA_ID = "com.bigsister.EXTRA_ID";
 
@@ -84,9 +85,9 @@ public class UniversityActivity extends FragmentActivity {
 
         // TODO: read from shared preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String userId = sharedPref.getString("userId", null);
+        userId = sharedPref.getString("userId", null);
 
-        handleFaveButton(userId, Integer.parseInt(id));
+        handleFaveButton(userId, id);
 
         // Setting up the first fragment
         if (findViewById(R.id.fragment_container) != null) {
@@ -131,7 +132,9 @@ public class UniversityActivity extends FragmentActivity {
             public void onClick(View v) {switchTabs(2);}
         });
 
+        checkAttendingUniversities(userId, id);
 
+        setupRateBtn(userId, id);
     }
 
     @Override
@@ -160,6 +163,9 @@ public class UniversityActivity extends FragmentActivity {
         Log.d("stefania", "running fragment switcher " + pos);
         // check what fragment is currently active
         if (pos == currentFragment) return;
+
+        Button rate = (Button) findViewById(R.id.giveRatingBtn);
+        rate.setVisibility(View.VISIBLE);
         // if it is different from the current one, switch
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch(pos) {
@@ -206,7 +212,7 @@ public class UniversityActivity extends FragmentActivity {
         });
     }
 
-    public void handleFaveButton(final String userId, final int uniId) {
+    public void handleFaveButton(final String userId, final String uniId) {
         Log.d("stefania", "user uni " + userId + " " + uniId);
         final String fbUrl = "https://blazing-torch-4222.firebaseio.com/Users/" + userId + "/favorites";
         Log.d("stefania", "Firebase: " + fbUrl);
@@ -215,21 +221,21 @@ public class UniversityActivity extends FragmentActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Button faveButton = (Button) findViewById(R.id.faveButton);
-                Log.d("stefania", "id " + Integer.toString(uniId));
-                Button rateButton = (Button) findViewById(R.id.giveRatingBtn);
-                if (dataSnapshot.hasChild(Integer.toString(uniId))) {
+                Log.d("stefania", "id " + uniId);
+                //Button rateButton = (Button) findViewById(R.id.giveRatingBtn);
+                if (dataSnapshot.hasChild(uniId)) {
                     // already faved
 
                     faveButton.setText("Faved");
                     faveButton.setBackgroundColor(android.graphics.Color.RED);
                     // setup rate button
-                    rateButton.setVisibility(View.VISIBLE);
+                    //rateButton.setVisibility(View.VISIBLE);
                 } else {
                     // activate fave button
                     faveButton.setText("Fave");
                     faveButton.setBackgroundColor(android.graphics.Color.GREEN);
                     // deactivate rate button
-                    rateButton.setVisibility(View.INVISIBLE);
+                    //rateButton.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -248,16 +254,15 @@ public class UniversityActivity extends FragmentActivity {
                 favRoot.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild(Integer.toString(uniId))) {
+                        if (dataSnapshot.hasChild(uniId)) {
                             // remove
                             Log.d("stefania", "remove from database");
-                            favRoot.child(Integer.toString(uniId)).setValue(null);
+                            favRoot.child(uniId).setValue(null);
 
-                        }
-                        else {
+                        } else {
                             // add
                             Log.d("stefania", "write to database");
-                            favRoot.child(Integer.toString(uniId)).setValue(Integer.toString(uniId));
+                            favRoot.child(uniId).setValue(uniId);
                         }
                         handleFaveButton(userId, uniId);
 
@@ -273,4 +278,36 @@ public class UniversityActivity extends FragmentActivity {
 
     }
 
+    public void checkAttendingUniversities(final String userId, final String uniId) {
+        String fbUrl = "https://blazing-torch-4222.firebaseio.com/Users/" + userId +"/universities";
+        Firebase attendRoot = new Firebase(fbUrl);
+        attendRoot.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Button rateButton = (Button) findViewById(R.id.giveRatingBtn);
+                if (dataSnapshot.hasChild(uniId)) {
+                    // button is here
+                    rateButton.setVisibility(View.VISIBLE);
+                } else {
+                    // button disappears
+                    rateButton.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+    public void setupRateBtn(final String userId, final String uniId) {
+        final Button rateBtn = (Button) findViewById(R.id.giveRatingBtn);
+        rateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //rateBtn.setVisibility(View.INVISIBLE);
+                Log.d("stefania", "Rate button");
+            }
+        });
+    }
 }
