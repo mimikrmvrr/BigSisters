@@ -53,14 +53,17 @@
             android:textAppearance="@android:style/TextAppearance.Material.Subhead"
             android:layout_alignLeft="@id/uniName"
             />
-        <Button
-            android:id="@+id/faveButton"
-            android:text="..."
+
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/uniUrl"
-            android:textSize="25dp"
-            />
+            android:id="@+id/faveButton"
+            android:src="@drawable/favorite22"
+            android:background="@android:color/transparent"
+            android:layout_alignRight="@id/uniPic"
+            android:layout_marginRight="20dp"
+            android:layout_alignBottom="@id/uniPic"
+            android:layout_marginBottom="20dp" />
 
         <LinearLayout
             android:id="@+id/buttonGroup"
@@ -70,7 +73,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="3"
-            android:layout_below="@id/faveButton">
+            android:layout_below="@id/uniUrl">
 
             <Button
                 android:id="@+id/button1"
