@@ -159,7 +159,7 @@ public class UniversityActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void switchTabs(int pos) {
+    public void switchTabs(int pos) {
         Log.d("stefania", "running fragment switcher " + pos);
         // check what fragment is currently active
         if (pos == currentFragment) return;

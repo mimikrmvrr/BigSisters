@@ -45,10 +45,10 @@ public class RatingFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 double[] ratings = new double[4];
                 //ratings[0] = Double.parseDouble((String) dataSnapshot.child("att0").child("grade").getValue());
-                ratings[0] = Double.parseDouble((String) dataSnapshot.child("att0").child("grade").getValue());
-                ratings[1] = Double.parseDouble((String) dataSnapshot.child("att1").child("grade").getValue());
-                ratings[2] = Double.parseDouble((String) dataSnapshot.child("att2").child("grade").getValue());
-                ratings[3] = Double.parseDouble((String) dataSnapshot.child("att3").child("grade").getValue());
+                ratings[0] = dataSnapshot.child("att0").child("grade").getValue(Double.class);
+                ratings[1] = dataSnapshot.child("att1").child("grade").getValue(Double.class);
+                ratings[2] = dataSnapshot.child("att2").child("grade").getValue(Double.class);
+                ratings[3] = dataSnapshot.child("att3").child("grade").getValue(Double.class);
                 TextView grade = (TextView) getView().findViewById(R.id.grade0);
                 grade.setText(Double.toString(ratings[0]));
                 grade = (TextView) getView().findViewById(R.id.grade1);
