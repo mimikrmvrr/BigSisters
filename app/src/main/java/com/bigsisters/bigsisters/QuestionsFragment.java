@@ -22,6 +22,7 @@ import com.firebase.client.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -132,7 +133,18 @@ public class QuestionsFragment extends Fragment {
             public void onDataChange(DataSnapshot snapshot) {
                 ArrayList<Question> questions = new ArrayList<>();
                 for (DataSnapshot child : snapshot.getChildren()) {
-                    questions.add(child.getValue(Question.class));
+                    List<Answer> answers = new ArrayList<>();
+                    for(DataSnapshot answerSnapshot : child.child("answer").getChildren()) {
+                        answers.add(answerSnapshot.getValue(Answer.class));
+                    }
+                    Question question = new Question();
+                    question.setAbout(child.child("about").getValue(String.class));
+                    question.setFrom(child.child("from").getValue(String.class));
+                    question.setText(child.child("text").getValue(String.class));
+                    question.setTime(child.child("time").getValue(String.class));
+                    question.setTitle(child.child("title").getValue(String.class));
+                    question.setAnswer(answers);
+                    questions.add(question);
                 }
 
                 QuestionsAdapter adapter = new QuestionsAdapter();
