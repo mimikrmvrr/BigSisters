@@ -35,6 +35,9 @@
         <activity
             android:name=".QuestionActivity">
         </activity>
+        <activity
+            android:name=".WriteAnswerActivity">
+        </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 
