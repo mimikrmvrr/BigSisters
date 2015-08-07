@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -108,11 +109,10 @@ public class QuestionActivity extends ActionBarActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 Question question = snapshot.getValue(Question.class);
                 title.setText(question.getTitle());
-                about.setText(question.getAbout());
+                loadUniversityName(question.getAbout(), about);
                 text.setText(question.getText());
                 from.setText(question.getFrom());
-                //answer.setText(question.getAnswer());
-                time.setText(question.getTime());
+                time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(question.getTime())));
 
                 AnswerAdapter adapter = new AnswerAdapter();
                 adapter.setAnswers(question.getAnswer());
@@ -124,8 +124,6 @@ public class QuestionActivity extends ActionBarActivity {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
-
-
     }
 
     @Override
@@ -143,5 +141,25 @@ public class QuestionActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadUniversityName(final String id, final TextView name) {
+        final Firebase universityRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Universities/" + id + "/univName");
+        universityRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String universityName = dataSnapshot.getValue(String.class);
+
+                if (universityName == null || universityName.isEmpty()) {
+                    universityName = "General";
+                }
+                name.setText(universityName);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 }
