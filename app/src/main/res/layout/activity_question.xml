@@ -46,6 +46,14 @@
         android:layout_marginLeft="20dp"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"/>
 
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Answers"
+        android:textAppearance="@android:style/TextAppearance.Material.Headline"
+        android:layout_margin="20dp"/>
+
     <ListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/answer"
