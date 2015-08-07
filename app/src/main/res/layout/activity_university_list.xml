@@ -10,7 +10,7 @@
         android:name="com.bigsisters.bigsisters.ToolBar" />
 
     <ListView
-        android:paddingTop="80dp"
+        android:layout_marginTop="80dp"
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
