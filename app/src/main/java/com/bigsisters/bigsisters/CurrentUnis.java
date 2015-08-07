@@ -131,7 +131,7 @@ public class CurrentUnis extends Fragment {
             }
         });
 
-        UniAdapter m
+        //UniAdapter m
 
         return v;
     }
