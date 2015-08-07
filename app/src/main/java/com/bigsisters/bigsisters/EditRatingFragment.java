@@ -32,7 +32,7 @@ public class EditRatingFragment extends Fragment {
     String uniUrl;
     final int[] oldRating = new int[4];
     final double[] oldUniRating = new double[4];
-    final int[] oldVotes = new int[4];
+    final long[] oldVotes = new long[4];
 
     public EditRatingFragment() {
         // Required empty public constructor
@@ -77,12 +77,15 @@ public class EditRatingFragment extends Fragment {
 
             }
         });
-        Firebase uniRating = new Firebase(uniUrl);
+        final Firebase uniRating = new Firebase(uniUrl);
         uniRating.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (int i = 0; i < 4; i++) {
-                    oldUniRating[i] = Double.parseDouble((String) dataSnapshot.child("att"+i).child("grade").getValue());
+                    //oldUniRating[i] = Double.parseDouble((String) dataSnapshot.child("att" + i).child("grade").getValue());
+                    oldUniRating[i] = dataSnapshot.child("att" + i).child("grade").getValue(Double.class);
+                    //oldVotes[i] = Integer.parseInt((String) dataSnapshot.child("att"+i).child("votes").getValue());
+                    oldVotes[i] = (Long) dataSnapshot.child("att"+i).child("votes").getValue(Long.class);
                     Log.d("stefania", Double.toString(oldUniRating[i]));
                 }
             }
@@ -121,6 +124,19 @@ public class EditRatingFragment extends Fragment {
 
                 // Then upgrade university
                 Firebase uniRatings = new Firebase(uniUrl);
+                for (int i = 0; i < 4; i++) {
+                    Log.d("stefania", "grades updated at " + uniUrl);
+                    if (oldRating[0] == 0) {
+                        if (oldVotes[0] == 0) uniRating.child("att"+i).child("grade").setValue(newRating[i]);
+                        else uniRating.child("att"+i).child("grade").setValue((oldRating[i] * oldVotes[i] + newRating[i]) / (1+oldVotes[i]));
+                        uniRating.child("att"+i).child("votes").setValue(oldVotes[i] + 1);
+                    }
+                    else {
+                        uniRating.child("att"+i).child("grade").setValue(oldUniRating[i] + (newRating[i] - oldRating[i]) / oldVotes[i]);
+                    }
+
+                }
+
 
             }
         });
