@@ -20,9 +20,9 @@ public class User {
     }
 
     private String photoUrl;
-    private ArrayList<String> pastUnis;
-    private ArrayList<String> currentUnis;
-    private ArrayList<String> faveUnis;
+    private ArrayList<University> pastUnis;
+    private ArrayList<University> currentUnis;
+    private ArrayList<University> faveUnis;
 
     public String getId() {
         return id;
@@ -33,11 +33,11 @@ public class User {
     }
 
 
-    public ArrayList<String> getFaveUnis() {
+    public ArrayList<University> getFaveUnis() {
         return faveUnis;
     }
 
-    public void setFaveUnis(ArrayList<String> faveUnis) {
+    public void setFaveUnis(ArrayList<University> faveUnis) {
         this.faveUnis = faveUnis;
     }
 
@@ -57,19 +57,19 @@ public class User {
         this.email = email;
     }
 
-    public ArrayList<String> getPastUnis() {
+    public ArrayList<University> getPastUnis() {
         return pastUnis;
     }
 
-    public void setPastUnis(ArrayList<String> pastUnis) {
+    public void setPastUnis(ArrayList<University> pastUnis) {
         this.pastUnis = pastUnis;
     }
 
-    public ArrayList<String> getCurrentUnis() {
+    public ArrayList<University> getCurrentUnis() {
         return currentUnis;
     }
 
-    public void setCurrentUnis(ArrayList<String> currentUnis) {
+    public void setCurrentUnis(ArrayList<University> currentUnis) {
         this.currentUnis = currentUnis;
     }
 

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -31,6 +32,12 @@ public class UserProfile extends ActionBarActivity {
     private UniAdapter pastUniAdapter;
     private UniAdapter currentUniAdapter;
     private UniAdapter favouriteUniAdapter;
+    private ArrayList<String> dunis;
+    private ArrayList<String> funis;
+    private ArrayList<String> cunis;
+    private ArrayList<University> currentUniversities;
+    private ArrayList<University> pastUniversities;
+    private ArrayList<University> favouriteUniversities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,13 @@ public class UserProfile extends ActionBarActivity {
             Firebase userRoot = new Firebase(fbUrl);
 
             mUser.setId(userId);
+            dunis =  new ArrayList<String>();
+            funis =  new ArrayList<String>();
+            cunis = new ArrayList<String>();
+            favouriteUniversities = new ArrayList<University>();
+            currentUniversities = new ArrayList<University>();
+            pastUniversities = new ArrayList<University>();
+
             userRoot.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -59,28 +73,28 @@ public class UserProfile extends ActionBarActivity {
                     tv.setText(mUser.getName());
                     ImageView imageView = (ImageView) findViewById(R.id.userimg);
                     Picasso.with(UserProfile.this).load(mUser.getPhotoUrl()).into(imageView);
-                    ArrayList<String> unis = new ArrayList<String>();
+
                     Log.d("Silvia", dataSnapshot.child("currents").getChildrenCount() + "");
                     DataSnapshot cds = dataSnapshot.child("currents");
                     for(DataSnapshot curr : cds.getChildren()){
                         String currentUni = curr.getValue(String.class);
-                        unis.add(currentUni);
+                        cunis.add(currentUni);
                     }
-                    mUser.setCurrentUnis(unis);
-                    unis =  new ArrayList<String>();
+
+
                     DataSnapshot fds = dataSnapshot.child("favorites");
                     for(DataSnapshot fave : cds.getChildren()){
                         String f = fave.getValue(String.class);
-                        unis.add(f);
+                        funis.add(f);
                     }
-                    mUser.setFaveUnis(unis);
-                    unis =  new ArrayList<String>();
-                    DataSnapshot pds = dataSnapshot.child("favorites");
+
+
+                    DataSnapshot pds = dataSnapshot.child("pasts");
                     for(DataSnapshot pst : pds.getChildren()){
                         String p = pst.getValue(String.class);
-                        unis.add(p);
+                        dunis.add(p);
                     }
-                    mUser.setFaveUnis(unis);
+
 
 
                 }
@@ -90,18 +104,85 @@ public class UserProfile extends ActionBarActivity {
                     // TODO: specific error handling
                     System.out.println("The read failed: " + firebaseError.getMessage());
                 }
-            });
+            });}
 
+            for(String f: funis){
+                String fbUrl = "https://blazing-torch-4222.firebaseio.com/Universities/" + f;
+                Firebase uniRoot = new Firebase(fbUrl);
+                //addig favourite universities
+                final University university = new University();
+                uniRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        university.setName((String) dataSnapshot.child("univName").getValue());
+                        university.setLocation((String) dataSnapshot.child("location").getValue());
+                        university.setWebsiteUrl((String) dataSnapshot.child("website").getValue());
+                        university.setPhotoUrl((String) dataSnapshot.child("univPhotoUrl").getValue());
+                        university.setInfo((String) dataSnapshot.child("info").getValue());
+                    favouriteUniversities.add(university);
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+
+                    }});}
+
+                for(String d: dunis){
+                    String fbUrl = "https://blazing-torch-4222.firebaseio.com/Universities/" + d;
+                    Firebase duniRoot = new Firebase(fbUrl);
+                    //adding past universities
+                    final University duniversity = new University();
+                    duniRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            duniversity.setName((String) dataSnapshot.child("univName").getValue());
+                            duniversity.setLocation((String) dataSnapshot.child("location").getValue());
+                            duniversity.setWebsiteUrl((String) dataSnapshot.child("website").getValue());
+                            duniversity.setPhotoUrl((String) dataSnapshot.child("univPhotoUrl").getValue());
+                            duniversity.setInfo((String) dataSnapshot.child("info").getValue());
+                            pastUniversities.add(duniversity);
+
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+
+                        }});
+            }
+
+                for(String c: cunis){
+                    String fbUrl = "https://blazing-torch-4222.firebaseio.com/Universities/" + c;
+                    Firebase cuniRoot = new Firebase(fbUrl);
+                    //adding current universities
+                    final University cuniversity = new University();
+                    cuniRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            cuniversity.setName((String) dataSnapshot.child("univName").getValue());
+                            cuniversity.setLocation((String) dataSnapshot.child("location").getValue());
+                            cuniversity.setWebsiteUrl((String) dataSnapshot.child("website").getValue());
+                            cuniversity.setPhotoUrl((String) dataSnapshot.child("univPhotoUrl").getValue());
+                            cuniversity.setInfo((String) dataSnapshot.child("info").getValue());
+                            currentUniversities.add(cuniversity);
+
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+
+                        }});
+                }
+        ListView currentUniView = (ListView) findViewById(R.id.current_uni_list);
+        currentUniAdapter = new UniAdapter();
+        currentUniAdapter.unis =  currentUniversities;
+        currentUniView.setAdapter(currentUniAdapter);
 
         }
 
-
-
-
-
-
-
-    }
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
@@ -140,8 +221,7 @@ public class UserProfile extends ActionBarActivity {
 
     public class UniAdapter extends BaseAdapter{
 
-        public ArrayList<String> unis;
-        public University university;
+        public ArrayList<University> unis;
         @Override
         public int getCount() {
             return unis.size();
@@ -150,44 +230,35 @@ public class UserProfile extends ActionBarActivity {
         @Override
         public Object getItem(int position) {
             //TODO make this get objects
-            String fbUrl = "https://blazing-torch-4222.firebaseio.com/Universities/" + unis.get(position);
-            Firebase uniRoot = new Firebase(fbUrl);
-            university = new University();
-            uniRoot.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    university.setName((String) dataSnapshot.child("univName").getValue());
-                    university.setLocation((String) dataSnapshot.child("location").getValue());
-                    university.setWebsiteUrl((String) dataSnapshot.child("website").getValue());
-                    university.setPhotoUrl((String) dataSnapshot.child("univPhotoUrl").getValue());
-                    university.setInfo((String) dataSnapshot.child("info").getValue());
-
-                    // Showing the data
-                    TextView tvName = (TextView) findViewById(R.id.uniName);
-                    tvName.setText(university.getName());
-                    TextView tvLocation = (TextView) findViewById(R.id.uniLocation);
-                    tvLocation.setText(university.getName());
-
-                }
-
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-
-
-                }});
+            University university = unis.get(position);
             return university;
 
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            University university = unis.get(position);
+            TextView tv ;
+            if (null == convertView) {
+                //no reuse - create new textView
+                tv = new TextView(UserProfile.this);
+                tv.setText(university.getName());
+                tv.setTextSize(22);
+                tv.setPadding(16, 16, 16, 16);
+            }
+            else {
+                //we have an old textView to work with
+                tv = (TextView) convertView;
+            }
+            //University uni = this.getItem(position);
+            tv.setText(university.getName());
 
-            return null;
+            return tv;
         }
     }
 }
