@@ -86,7 +86,7 @@ public class ToolBar extends Fragment {
 
         // Inflate a menu to be displayed in the toolbar
 
-        ActionBarActivity activity = (ActionBarActivity) this.getActivity();
+        Activity activity = (Activity) this.getActivity();
         //activity.setSupportActionBar(mToolBar);
         //GetActivity().setSupportActionBar(toolbar);
 

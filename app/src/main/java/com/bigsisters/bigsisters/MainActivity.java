@@ -5,6 +5,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -118,10 +119,10 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-                                            SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                                            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                                             SharedPreferences.Editor editor = sharedPref.edit();
                                             editor.putString(getString(R.string.login_id), id);
-                                            editor.commit();
+                                            editor.apply();
 
 
                                             String ename = "name";
