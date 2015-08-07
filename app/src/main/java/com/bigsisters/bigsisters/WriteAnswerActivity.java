@@ -40,6 +40,7 @@ public class WriteAnswerActivity extends ActionBarActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Answer newAnswer = new Answer();
                         newAnswer.setText(text.getText().toString());
+                        newAnswer.setTime(String.format("%s", System.currentTimeMillis()));
                         postRef.push().setValue(newAnswer);
                     }
 

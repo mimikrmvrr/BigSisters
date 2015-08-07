@@ -1,6 +1,7 @@
 package com.bigsisters.bigsisters;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -92,9 +93,31 @@ public class MainActivity extends ActionBarActivity {
                                                     }
                                             ).executeAsync();
 
+                                            LoginManager.getInstance().logInWithReadPermissions( //logInWithPublishPermissions(
+                                                    MainActivity.this,
+                                                    Arrays.asList("email", "public_profile"));
 
-                                            ref.child(id).setValue("");
-                                            //sharedPreferences(id);
+                                          /* new GraphRequest(
+                                                    AccessToken.getCurrentAccessToken(),
+                                                    "/"+id+"/email",
+                                                    null,
+                                                    HttpMethod.GET,
+                                                    new GraphRequest.Callback() {
+                                                        public void onCompleted(GraphResponse response) {
+                                                            Firebase ref = new Firebase("https://blazing-torch-4222.firebaseio.com/Users");
+                                                             String email = (String)response.toString();
+                                                            Log.d("email", email);
+
+
+
+                                                            String eemail = "email";
+                                                            ref.child(id).child(eemail).setValue(email);
+
+                                                        }
+                                                    }
+                                            ).executeAsync();*/
+
+
 
                                             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                                             SharedPreferences.Editor editor = sharedPref.edit();
@@ -142,12 +165,12 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    void sharedPreferences(String loginId) {
+   /* void sharedPreferences(String loginId) {
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(getString(R.string.login_id), Integer.parseInt(loginId));
         editor.commit();
-    }
+    }*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
