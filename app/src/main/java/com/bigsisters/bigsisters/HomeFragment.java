@@ -76,12 +76,13 @@ public class HomeFragment extends android.support.v4.app.Fragment {
             }
 
             Post post = getItem(position);
-            if (viewHolder.name != null) {
-                viewHolder.name.setText(post.getName());
-            };
+
+            loadUniversityName(post.getName(), viewHolder.name);
+            loadUniversityPic(post.getName(), viewHolder.pic);
+
             viewHolder.time.setText(post.getTime());
             viewHolder.post_content.setText(post.getText());
-            Picasso.with(getActivity().getApplicationContext()).load(post.getPicUrl()).into(viewHolder.pic);
+
             viewHolder.name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,7 +100,37 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         }
 
 
+        private void loadUniversityName(String id, final TextView name) {
+            final Firebase universityRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Universities/" + id + "/univName");
+            universityRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    name.setText(dataSnapshot.getValue(String.class));
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+        }
+
+        private void loadUniversityPic(String id, final ImageView image) {
+            final Firebase universityRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Universities/" + id + "/univPhotoUrl");
+            universityRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Picasso.with(getActivity().getApplicationContext()).load(dataSnapshot.getValue(String.class)).into(image);
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+        }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
