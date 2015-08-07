@@ -165,12 +165,12 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-   /* void sharedPreferences(String loginId) {
+   void sharedPreferences(String loginId) {
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(getString(R.string.login_id), Integer.parseInt(loginId));
+        editor.putString(getString(R.string.login_id), loginId);
         editor.commit();
-    }*/
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

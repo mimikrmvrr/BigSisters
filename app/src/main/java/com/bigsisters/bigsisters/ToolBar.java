@@ -2,7 +2,9 @@ package com.bigsisters.bigsisters;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -68,6 +70,14 @@ public class ToolBar extends Fragment {
                     case R.id.profile:
                         Intent intent = new Intent(getActivity(), UserProfile.class);
                         startActivity(intent);
+                        return true;
+                    case R.id.log_out:
+                        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(getString(R.string.login_id), "");
+                        editor.commit();
+                        Intent intent2 = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent2);
                         return true;
                 }
 

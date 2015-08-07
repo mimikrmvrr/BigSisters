@@ -200,7 +200,7 @@ public class UniversityActivity extends FragmentActivity {
         ImageView imageView = (ImageView) findViewById(R.id.uniPic);
         //Picasso.with(this).load(url).into(imageView);
         Log.d("UniversityActivity", "Loading URL: " + url);
-        Picasso.with(this).load(url).placeholder(R.drawable.home168).error(R.drawable.logo).into(imageView);
+        Picasso.with(this).load(url).placeholder(R.drawable.home168).error(R.mipmap.bigslogo).into(imageView);
     }
 
     public void attendedThisUni(final int studentID, final int uniID) {
