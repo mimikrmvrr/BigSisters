@@ -179,6 +179,11 @@ public class UniversityActivity extends FragmentActivity {
                 transaction.replace(R.id.fragment_container, rFragment);
                 currentFragment = 1;
                 break;
+            case 3:
+                EditRatingFragment eFragment = new EditRatingFragment();
+                transaction.replace(R.id.fragment_container, eFragment);
+                currentFragment = 3;
+                break;
             default: return;
 
         }
@@ -307,7 +312,10 @@ public class UniversityActivity extends FragmentActivity {
             public void onClick(View v) {
                 //rateBtn.setVisibility(View.INVISIBLE);
                 Log.d("stefania", "Rate button");
+                switchTabs(3);
             }
         });
     }
+
+
 }
