@@ -18,6 +18,9 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 
 public class UserProfile extends ActionBarActivity {
     private User mUser;
@@ -39,19 +42,30 @@ public class UserProfile extends ActionBarActivity {
             userId=userid;
             String fbUrl = "https://blazing-torch-4222.firebaseio.com/Users/" + userId;
             Firebase userRoot = new Firebase(fbUrl);
-            Log.d("silvia", "Firebase: " + fbUrl);
+
             mUser.setId(userId);
             userRoot.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     mUser.setName((String) dataSnapshot.child("name").getValue());
                     mUser.setPhotoUrl((String) dataSnapshot.child("photoUrl").getValue());
-
-                    Log.d("silvia", "Firebase: " + mUser.getName() + mUser.getPhotoUrl());
                     TextView tv = (TextView) findViewById(R.id.name);
                     tv.setText(mUser.getName());
                     ImageView imageView = (ImageView) findViewById(R.id.userimg);
                     Picasso.with(UserProfile.this).load(mUser.getPhotoUrl()).into(imageView);
+                    ArrayList<String> unis = new ArrayList<String>();
+                    Log.d("Silvia" , dataSnapshot.child("currents").getChildrenCount()+"");
+                    DataSnapshot cds = dataSnapshot.child("currents");
+                    for(DataSnapshot curr : cds.getChildren()){
+                        String fave = curr.getValue(String.class);
+                        unis.add(fave);
+                        Log.d("silvia",fave +"aaah");
+                    }
+
+
+
+
+
                 }
 
                 @Override
