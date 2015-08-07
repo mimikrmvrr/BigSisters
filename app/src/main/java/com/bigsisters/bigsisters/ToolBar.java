@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 public class ToolBar extends Fragment {
     private Toolbar mToolBar;
     private ImageButton mHomeButton;
+    private ImageButton mSearchButton;
 
 
 
@@ -79,6 +80,15 @@ public class ToolBar extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        mSearchButton = (ImageButton) v.findViewById(R.id.search_button);
+        mSearchButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
                 startActivity(intent);
 
             }
