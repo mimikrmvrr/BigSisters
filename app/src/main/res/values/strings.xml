@@ -18,4 +18,5 @@
     <string name="att1">Reasearch</string>
     <string name="att2">SocialLife</string>
     <string name="att3">City</string>
+    <string name="title_activity_university_list">UniversityListActivity</string>
 </resources>

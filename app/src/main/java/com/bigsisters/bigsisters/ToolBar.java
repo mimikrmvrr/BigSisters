@@ -29,6 +29,7 @@ public class ToolBar extends Fragment {
     private Toolbar mToolBar;
     private ImageButton mHomeButton;
     private ImageButton mSearchButton;
+    private ImageButton mFaveButton;
 
 
 
@@ -93,6 +94,17 @@ public class ToolBar extends Fragment {
 
             }
         });
+
+        mFaveButton = (ImageButton) v.findViewById(R.id.fave_button);
+        mFaveButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), UniversityListActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
 
         // Inflate a menu to be displayed in the toolbar
 
