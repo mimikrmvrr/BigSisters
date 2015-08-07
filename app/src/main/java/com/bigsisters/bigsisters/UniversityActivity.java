@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
@@ -197,7 +198,8 @@ public class UniversityActivity extends FragmentActivity {
         String url2 = "http://www.educationabroadnetwork.org/site/galleries/8_458.jpg";
         ImageView imageView = (ImageView) findViewById(R.id.uniPic);
         //Picasso.with(this).load(url).into(imageView);
-        Picasso.with(this).load(url).placeholder(R.id.uniPic).into(imageView);
+        Log.d("UniversityActivity", "Loading URL: " + url);
+        Picasso.with(this).load(url).placeholder(R.drawable.home168).error(R.drawable.logo).into(imageView);
     }
 
     public void attendedThisUni(final int studentID, final int uniID) {
