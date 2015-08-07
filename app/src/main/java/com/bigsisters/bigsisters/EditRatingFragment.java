@@ -145,7 +145,7 @@ public class EditRatingFragment extends Fragment {
                     }
 
                     UniversityActivity parent = (UniversityActivity) getActivity();
-                    parent.switchTabs(1);
+                    //parents.switchTabs(1);
                 }
 
 
