@@ -26,6 +26,8 @@ import com.firebase.client.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -87,8 +89,8 @@ public class QuestionActivity extends ActionBarActivity {
             return layout;
         }
 
-        public void setAnswers(List<Answer> answers) {
-            this.answers = answers;
+        public void setAnswers(Collection<Answer> answers) {
+            this.answers = new ArrayList<>(answers);
         }
     }
 
