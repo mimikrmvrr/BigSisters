@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/pic"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_alignParentLeft="true"
         android:layout_margin="6dp"/>
 
@@ -17,14 +17,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/pic"
-        android:textAppearance="@android:style/TextAppearance.Material.Title"/>
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:layout_margin="6dp"
+        android:layout_alignTop="@id/pic"/>
 
     <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/name"/>
+        android:layout_alignLeft="@id/name"
+        android:layout_below="@id/name" />
 
 
 

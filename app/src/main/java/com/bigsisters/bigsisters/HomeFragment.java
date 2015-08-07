@@ -1,17 +1,8 @@
 package com.bigsisters.bigsisters;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -33,8 +24,7 @@ import java.util.List;
 /**
  * Created by demouser on 8/6/15.
  */
-public class HomeActivity extends ActionBarActivity {
-
+public class HomeFragment extends android.support.v4.app.Fragment {
     public class PostsAdapter extends BaseAdapter {
 
         private class ViewHolder {
@@ -71,7 +61,7 @@ public class HomeActivity extends ActionBarActivity {
                 postLayout = (LinearLayout) convertView;
                 viewHolder = (ViewHolder) postLayout.getTag();
             } else {
-                LayoutInflater postInflater = LayoutInflater.from(HomeActivity.this);
+                LayoutInflater postInflater = LayoutInflater.from(getActivity());
                 postLayout = (LinearLayout) postInflater.inflate(R.layout.post, null);
                 postHeaderLayout = (RelativeLayout) postLayout.findViewById(R.id.post_header);
 
@@ -90,7 +80,7 @@ public class HomeActivity extends ActionBarActivity {
             };
             viewHolder.time.setText(post.getTime());
             viewHolder.post_content.setText(post.getText());
-            Picasso.with(getApplicationContext()).load(post.getPicUrl()).into(viewHolder.pic);
+            Picasso.with(getActivity().getApplicationContext()).load(post.getPicUrl()).into(viewHolder.pic);
 
             return postLayout;
         }
@@ -101,46 +91,32 @@ public class HomeActivity extends ActionBarActivity {
 
 
     }
-
-    private class TabsAdapter extends FragmentStatePagerAdapter {
-
-        private final String[] tabs = {"NEWS", "Q&A"};
-
-        public TabsAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            if (position == 0) {
-                return new HomeFragment();
-            }
-            return new QuestionsFragment();
-        }
-
-        @Override
-        public int getCount() {
-            return tabs.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabs[position];
-        }
-    }
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        final ListView list = (ListView) inflater.inflate(R.layout.posts_list, container, false);
+        Firebase.setAndroidContext(getActivity());
+        final Firebase postsRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Posts");
+        postsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                ArrayList<Post> posts = new ArrayList<>();
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    posts.add(child.getValue(Post.class));
+                }
 
-        setContentView(R.layout.activity_home);
+                PostsAdapter adapter = new PostsAdapter();
+                adapter.setPosts(posts);
+                list.setAdapter(adapter);
+            }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new TabsAdapter(getSupportFragmentManager()));
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
 
+        return list;
     }
-
-
-
-
 }
