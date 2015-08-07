@@ -85,6 +85,14 @@ public class ToolBar extends Fragment {
             }
         });
         mSearchButton = (ImageButton) v.findViewById(R.id.search_button);
+        mSearchButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         // Inflate a menu to be displayed in the toolbar
 
