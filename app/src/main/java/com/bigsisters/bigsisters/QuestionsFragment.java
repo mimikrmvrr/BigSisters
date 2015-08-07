@@ -3,6 +3,7 @@ package com.bigsisters.bigsisters;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,8 +77,7 @@ public class QuestionsFragment extends Fragment {
             Question question = getItem(position);
             viewHolder.title.setText(question.getTitle());
             loadUniversityName(question.getAbout(), viewHolder.about);
-            viewHolder.time.setText(question.getTime());
-           // viewHolder.about.setText(question.getAbout());
+            viewHolder.time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(question.getTime())));
 
             layout.setOnClickListener(
                     new View.OnClickListener() {
