@@ -112,7 +112,7 @@ public class QuestionActivity extends ActionBarActivity {
                 title.setText(question.getTitle());
                 loadUniversityName(question.getAbout(), about);
                 text.setText(question.getText());
-                from.setText(question.getFrom());
+                loadUserName(question.getFrom(), from);
                 time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(question.getTime())));
                 answers_count.setText("" + question.getAnswer().size() + " Answers");
 
@@ -156,6 +156,22 @@ public class QuestionActivity extends ActionBarActivity {
                     universityName = "General";
                 }
                 name.setText(universityName);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    private void loadUserName(final String id, final TextView name) {
+        final Firebase userRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Users/" + id + "/name");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String username = dataSnapshot.getValue(String.class);
+                name.setText(username);
             }
 
             @Override
