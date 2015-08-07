@@ -30,6 +30,7 @@ public class QuestionActivity extends ActionBarActivity {
         final TextView text = (TextView) findViewById(R.id.text);
         final TextView from = (TextView) findViewById(R.id.from);
         final TextView answer = (TextView) findViewById(R.id.answer);
+        final TextView time = (TextView) findViewById(R.id.time);
 
         Firebase.setAndroidContext(QuestionActivity.this);
         final Firebase questionRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Questions/question1");
@@ -42,6 +43,7 @@ public class QuestionActivity extends ActionBarActivity {
                 text.setText(question.getText());
                 from.setText(question.getFrom());
                 answer.setText(question.getAnswer());
+                time.setText(question.getTime());
             }
 
             @Override

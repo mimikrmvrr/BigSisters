@@ -22,24 +22,35 @@
         android:id="@+id/about"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Material.Caption"
         android:layout_marginLeft="20dp" />
 
     <TextView
         android:id="@+id/text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Material.Body1"
         android:layout_margin="20dp"/>
 
     <TextView
         android:id="@+id/from"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"/>R
+        android:layout_marginLeft="20dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"/>
 
     <TextView
         android:id="@+id/answer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Body1"/>
 
 </LinearLayout>
