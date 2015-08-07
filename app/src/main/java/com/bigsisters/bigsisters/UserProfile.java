@@ -1,17 +1,90 @@
 package com.bigsisters.bigsisters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 
 public class UserProfile extends ActionBarActivity {
+    private User mUser;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        Firebase.setAndroidContext(this);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String userid = sharedPref.getString(getString(R.string.login_id),"");
+        if(userid.equals("")){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            mUser=new User();
+            userId=userid;
+            String fbUrl = "https://blazing-torch-4222.firebaseio.com/Users/" + userId;
+            Firebase userRoot = new Firebase(fbUrl);
+            Log.d("silvia", "Firebase: " + fbUrl);
+            mUser.setId(userId);
+            userRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mUser.setName((String) dataSnapshot.child("name").getValue());
+                    mUser.setPhotoUrl((String) dataSnapshot.child("photoUrl").getValue());
+
+                    Log.d("silvia", "Firebase: " + mUser.getName() + mUser.getPhotoUrl());
+                    TextView tv = (TextView) findViewById(R.id.name);
+                    tv.setText(mUser.getName());
+                    ImageView imageView = (ImageView) findViewById(R.id.userimg);
+                    Picasso.with(UserProfile.this).load(mUser.getPhotoUrl()).into(imageView);
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    // TODO: specific error handling
+                    System.out.println("The read failed: " + firebaseError.getMessage());
+                }
+            });
+
+
+        }
+
+
+
+
+
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String userid = sharedPref.getString(getString(R.string.login_id),"");
+        if(userid.equals("")){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            userId=userid;
+
+
+        }
     }
 
     @Override

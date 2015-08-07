@@ -30,6 +30,7 @@ public class ToolBar extends Fragment {
     private ImageButton mHomeButton;
 
 
+
     public static ToolBar newInstance(String param1, String param2) {
         ToolBar fragment = new ToolBar();
         Bundle args = new Bundle();
@@ -85,7 +86,7 @@ public class ToolBar extends Fragment {
 
         // Inflate a menu to be displayed in the toolbar
 
-        ActionBarActivity activity = (ActionBarActivity) this.getActivity();
+        Activity activity = (Activity) this.getActivity();
         //activity.setSupportActionBar(mToolBar);
         //GetActivity().setSupportActionBar(toolbar);
 

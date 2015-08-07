@@ -6,7 +6,7 @@
         android:id="@+id/my_toolbar"
         android:layout_height="?actionBarSize"
         android:layout_width="match_parent"
-        android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:background="?colorAccent"
         >
         <ImageButton

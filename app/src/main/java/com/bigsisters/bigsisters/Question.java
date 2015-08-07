@@ -1,5 +1,7 @@
 package com.bigsisters.bigsisters;
 
+import java.util.List;
+
 /**
  * Created by demouser on 8/6/15.
  */
@@ -9,7 +11,7 @@ public class Question {
     private String time;
     private String text;
     private String from;
-    private String answer;
+    private List<Answer> answer;
 
     public String getText() {
         return text;
@@ -27,11 +29,11 @@ public class Question {
         this.from = from;
     }
 
-    public String getAnswer() {
+    public List<Answer> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(List<Answer> answer) {
         this.answer = answer;
     }
 
