@@ -15,7 +15,7 @@
     <string name="title_activity_university">University</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="att0">Teaching</string>
-    <string name="att1">Reasearch</string>
+    <string name="att1">Research</string>
     <string name="att2">SocialLife</string>
     <string name="att3">City</string>
     <string name="title_activity_university_list">UniversityListActivity</string>
