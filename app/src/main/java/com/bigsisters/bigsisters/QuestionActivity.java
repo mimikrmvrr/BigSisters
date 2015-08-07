@@ -101,6 +101,7 @@ public class QuestionActivity extends ActionBarActivity {
         final TextView from = (TextView) findViewById(R.id.from);
         final ListView answer = (ListView) findViewById(R.id.answer);
         final TextView time = (TextView) findViewById(R.id.time);
+        final TextView answers_count = (TextView) findViewById(R.id.answers_count);
 
         Firebase.setAndroidContext(QuestionActivity.this);
         final Firebase questionRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Questions/question1");
@@ -113,6 +114,7 @@ public class QuestionActivity extends ActionBarActivity {
                 text.setText(question.getText());
                 from.setText(question.getFrom());
                 time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(question.getTime())));
+                answers_count.setText("" + question.getAnswer().size() + " Answers");
 
                 AnswerAdapter adapter = new AnswerAdapter();
                 adapter.setAnswers(question.getAnswer());
