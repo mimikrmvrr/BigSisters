@@ -112,7 +112,7 @@ public class QuestionActivity extends ActionBarActivity {
         Firebase.setAndroidContext(QuestionActivity.this);
         Intent intent = getIntent();
         final String questionId = intent.getStringExtra(QUESTION_ID);
-        final Firebase questionRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Questions/" + "question1");
+        final Firebase questionRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Questions/" + questionId);
         questionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
