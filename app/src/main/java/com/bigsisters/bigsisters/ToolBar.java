@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 public class ToolBar extends Fragment {
     private Toolbar mToolBar;
     private ImageButton mHomeButton;
+    private ImageButton mSearchButton;
 
 
 
@@ -83,6 +84,7 @@ public class ToolBar extends Fragment {
 
             }
         });
+        mSearchButton = (ImageButton) v.findViewById(R.id.search_button);
 
         // Inflate a menu to be displayed in the toolbar
 
