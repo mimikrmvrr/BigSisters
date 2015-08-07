@@ -3,6 +3,7 @@ package com.bigsisters.bigsisters;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +81,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
             loadUniversityName(post.getName(), viewHolder.name);
             loadUniversityPic(post.getName(), viewHolder.pic);
 
-            viewHolder.time.setText(post.getTime());
+            viewHolder.time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(post.getTime())));
             viewHolder.post_content.setText(post.getText());
 
             viewHolder.name.setOnClickListener(new View.OnClickListener() {
