@@ -66,7 +66,7 @@ public class UniversityActivity extends FragmentActivity {
                 TextView tvName = (TextView) findViewById(R.id.uniName);
                 tvName.setText(university.getName());
                 TextView tvLocation = (TextView) findViewById(R.id.uniLocation);
-                tvLocation.setText(university.getName());
+                tvLocation.setText(university.getLocation());
 
                 setupImage(university.getPhotoUrl());
             }
@@ -175,7 +175,8 @@ public class UniversityActivity extends FragmentActivity {
         Log.d("stefania", "image url " + url);
         String url2 = "http://www.educationabroadnetwork.org/site/galleries/8_458.jpg";
         ImageView imageView = (ImageView) findViewById(R.id.uniPic);
-        Picasso.with(this).load(url).into(imageView);
+        //Picasso.with(this).load(url).into(imageView);
+        Picasso.with(this).load(url).placeholder(R.id.uniPic).into(imageView);
     }
 
 }
