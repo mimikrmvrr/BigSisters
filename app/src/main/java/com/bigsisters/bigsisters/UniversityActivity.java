@@ -34,6 +34,8 @@ public class UniversityActivity extends FragmentActivity {
 
     int currentFragment = 0;
     University university = new University();
+    boolean isStudent = false;
+
     static final String EXTRA_ID = "com.bigsister.EXTRA_ID";
 
     @Override
@@ -80,13 +82,14 @@ public class UniversityActivity extends FragmentActivity {
 
         // Setting up the first fragment
         if (findViewById(R.id.fragment_container) != null) {
-            if (savedInstanceState != null) { return;}
+            if (savedInstanceState == null) {
             Bundle args = new Bundle();
-            Log.d("stefania", "argument id is " +university.id);
+            Log.d("stefania", "argument id is " + university.id);
             args.putInt("id", university.id);
             UnivInfoFragment startFragment = new UnivInfoFragment();
             startFragment.setArguments(args);
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, startFragment).commit();
+        }
         }
 
         // Opening the website
@@ -176,6 +179,42 @@ public class UniversityActivity extends FragmentActivity {
         String url2 = "http://www.educationabroadnetwork.org/site/galleries/8_458.jpg";
         ImageView imageView = (ImageView) findViewById(R.id.uniPic);
         Picasso.with(this).load(url).into(imageView);
+    }
+
+    public void attendedThisUni(final int studentID, final int uniID) {
+        Firebase studentRoot = new Firebase("https://blazing-torch-4222.firebaseio.com/Users/" + studentID);
+        studentRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("current").hasChild(Integer.toString(uniID)) ||
+                        dataSnapshot.child("past").hasChild(Integer.toString(uniID))) {
+                    isStudent = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    public void handleFaveButton(final int userId, final int uniId) {
+        Firebase userFaves = new Firebase("https://blazing-torch-4222.firebaseio.com/Users/" + Integer.toString(userId) + "/facvorites");
+        userFaves.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(Integer.toString(uniId))) {
+                    // already faved
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
     }
 
 }
