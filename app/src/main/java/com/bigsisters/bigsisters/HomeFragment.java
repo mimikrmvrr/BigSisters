@@ -1,6 +1,7 @@
 package com.bigsisters.bigsisters;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,6 +82,14 @@ public class HomeFragment extends android.support.v4.app.Fragment {
             viewHolder.time.setText(post.getTime());
             viewHolder.post_content.setText(post.getText());
             Picasso.with(getActivity().getApplicationContext()).load(post.getPicUrl()).into(viewHolder.pic);
+            viewHolder.name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent  = new Intent(getActivity(), UniversityActivity.class);
+                    intent.putExtra(UniversityActivity.EXTRA_ID, "1");
+                    startActivity(intent);
+                }
+            });
 
             return postLayout;
         }
