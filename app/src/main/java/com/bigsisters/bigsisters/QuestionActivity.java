@@ -26,6 +26,8 @@ import com.firebase.client.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -87,8 +89,8 @@ public class QuestionActivity extends ActionBarActivity {
             return layout;
         }
 
-        public void setAnswers(List<Answer> answers) {
-            this.answers = answers;
+        public void setAnswers(Collection<Answer> answers) {
+            this.answers = new ArrayList<>(answers);
         }
     }
 
@@ -111,7 +113,18 @@ public class QuestionActivity extends ActionBarActivity {
         questionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                Question question = snapshot.getValue(Question.class);
+                List<Answer> answers = new ArrayList<>();
+                for(DataSnapshot answerSnapshot : snapshot.child("answer").getChildren()) {
+                    answers.add(answerSnapshot.getValue(Answer.class));
+                }
+                Question question = new Question();
+                question.setAbout(snapshot.child("about").getValue(String.class));
+                question.setFrom(snapshot.child("from").getValue(String.class));
+                question.setText(snapshot.child("text").getValue(String.class));
+                question.setTime(snapshot.child("time").getValue(String.class));
+                question.setTitle(snapshot.child("title").getValue(String.class));
+                question.setAnswer(answers);
+                //Question question = snapshot.getValue(Question.class);
                 title.setText(question.getTitle());
                 loadUniversityName(question.getAbout(), about);
                 text.setText(question.getText());
@@ -136,6 +149,7 @@ public class QuestionActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuestionActivity.this, WriteAnswerActivity.class);
+                intent.putExtra(WriteAnswerActivity.QUESTION_ID, "question1");
                 startActivity(intent);
             }
         });

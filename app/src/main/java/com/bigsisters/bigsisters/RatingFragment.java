@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
 
@@ -22,7 +23,8 @@ import com.firebase.client.ValueEventListener;
 public class RatingFragment extends Fragment {
 
     private TextView mText;
-    int id;
+    int uniId;
+    String userId;
     public RatingFragment() {
         // Required empty public constructor
     }
@@ -34,8 +36,9 @@ public class RatingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rating, null);
         UniversityActivity parent = (UniversityActivity) getActivity();
-        id = parent.university.id;
-        String fbUrl = "https://blazing-torch-4222.firebaseio.com/Universities/" + id + "/rating";
+        uniId = parent.university.id;
+        userId = parent.userId;
+        String fbUrl = "https://blazing-torch-4222.firebaseio.com/Universities/" + uniId + "/rating";
         Firebase uniRoot = new Firebase(fbUrl);
         uniRoot.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -62,7 +65,12 @@ public class RatingFragment extends Fragment {
             }
         });
 
+
+
+
         return view;
     }
+
+
 
 }

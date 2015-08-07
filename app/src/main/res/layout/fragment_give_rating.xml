@@ -1,6 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.bigsisters.bigsisters.RatingFragment">
+    android:layout_height="match_parent" tools:context="com.bigsisters.bigsisters.GiveRatingFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -17,16 +17,17 @@
             android:weightSum="5">
 
             <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:text="Attribute"/>
-            <TextView
-                android:id="@+id/grade0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:text="Attribute"/>
+            <EditText
+                android:id="@+id/myGrade0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="..."/>
+                android:text="..."
+                android:digits="0123456789"/>
 
         </LinearLayout>
         <LinearLayout
@@ -42,12 +43,13 @@
                 android:layout_weight="4"
                 android:text="Attribute"/>
 
-            <TextView
-                android:id="@+id/grade1"
+            <EditText
+                android:id="@+id/myGrade1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="..."/>
+                android:text="..."
+                android:digits="0123456789"/>
 
         </LinearLayout>
         <LinearLayout
@@ -63,12 +65,13 @@
                 android:layout_weight="4"
                 android:text="Attribute"/>
 
-            <TextView
-                android:id="@+id/grade2"
+            <EditText
+                android:id="@+id/myGrade2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="..."/>
+                android:text="..."
+                android:digits="0123456789"/>
 
         </LinearLayout>
         <LinearLayout
@@ -84,16 +87,22 @@
                 android:layout_weight="4"
                 android:text="Attribute"/>
 
-            <TextView
-                android:id="@+id/grade3"
+            <EditText
+                android:id="@+id/myGrade3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="..."/>
+                android:text="..."
+                android:digits="0123456789"/>
 
         </LinearLayout>
 
 
+    <Button
+        android:id="@+id/confirmBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"/>
 
 
     </LinearLayout>

@@ -8,7 +8,9 @@
     <EditText
         android:id="@+id/answer"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/back"
+        android:layout_margin="32dp"/>
 
     <Button
         android:id="@+id/submit_button"
