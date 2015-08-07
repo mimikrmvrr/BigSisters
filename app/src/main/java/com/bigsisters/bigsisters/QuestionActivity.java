@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -126,6 +127,16 @@ public class QuestionActivity extends ActionBarActivity {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
+
+        final Button addAnswerButton = (Button) findViewById(R.id.add_answer);
+        addAnswerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QuestionActivity.this, WriteAnswerActivity.class);
+                startActivity(intent);
             }
         });
     }
