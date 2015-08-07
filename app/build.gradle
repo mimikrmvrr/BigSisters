@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config_bigsisters {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('/Users/demouser/.android/debug.keystore')
+            storePassword 'android'
+        }
+    }
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
-
     defaultConfig {
         applicationId "com.bigsisters.bigsisters"
         minSdkVersion 18
@@ -16,8 +23,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.config_bigsisters
+        }
     }
-
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -30,7 +39,9 @@ android {
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
     }
-
+}
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -38,4 +49,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.firebase:firebase-client-android:2.3.0+'
+    compile 'com.facebook.android:facebook-android-sdk:4.1.0'
 }
