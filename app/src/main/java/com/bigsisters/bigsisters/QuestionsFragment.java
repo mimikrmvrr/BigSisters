@@ -3,6 +3,7 @@ package com.bigsisters.bigsisters;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,9 +76,8 @@ public class QuestionsFragment extends Fragment {
 
             Question question = getItem(position);
             viewHolder.title.setText(question.getTitle());
-
-            viewHolder.time.setText(question.getTime());
-            viewHolder.about.setText(question.getAbout());
+            loadUniversityName(question.getAbout(), viewHolder.about);
+            viewHolder.time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(question.getTime())));
 
             layout.setOnClickListener(
                     new View.OnClickListener() {
@@ -95,6 +95,26 @@ public class QuestionsFragment extends Fragment {
 
         public void setQuestions(List<Question> questions) {
             this.questions = questions;
+        }
+
+        private void loadUniversityName(final String id, final TextView name) {
+            final Firebase universityRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Universities/" + id + "/univName");
+            universityRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String universityName = dataSnapshot.getValue(String.class);
+
+                    if (universityName == null || universityName.isEmpty()) {
+                        universityName = "General";
+                    }
+                    name.setText(universityName);
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
         }
 
 

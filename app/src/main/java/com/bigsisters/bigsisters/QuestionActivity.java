@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -77,8 +78,10 @@ public class QuestionActivity extends ActionBarActivity {
 
             Answer answer = getItem(position);
             viewHolder.text.setText(answer.getText());
-            viewHolder.time.setText(answer.getTime());
-            viewHolder.from.setText(answer.getFrom());
+            viewHolder.time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(answer.getTime())));
+            //viewHolder.time.setText(answer.getTime());
+            loadUserName(answer.getFrom(), viewHolder.from);
+           // viewHolder.from.setText(answer.getFrom());
 
             return layout;
         }
@@ -100,6 +103,7 @@ public class QuestionActivity extends ActionBarActivity {
         final TextView from = (TextView) findViewById(R.id.from);
         final ListView answer = (ListView) findViewById(R.id.answer);
         final TextView time = (TextView) findViewById(R.id.time);
+        final TextView answers_count = (TextView) findViewById(R.id.answers_count);
 
         Firebase.setAndroidContext(QuestionActivity.this);
         final Firebase questionRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Questions/question1");
@@ -108,11 +112,11 @@ public class QuestionActivity extends ActionBarActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 Question question = snapshot.getValue(Question.class);
                 title.setText(question.getTitle());
-                about.setText(question.getAbout());
+                loadUniversityName(question.getAbout(), about);
                 text.setText(question.getText());
-                from.setText(question.getFrom());
-                //answer.setText(question.getAnswer());
-                time.setText(question.getTime());
+                loadUserName(question.getFrom(), from);
+                time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(question.getTime())));
+                answers_count.setText("" + question.getAnswer().size() + " Answers");
 
                 AnswerAdapter adapter = new AnswerAdapter();
                 adapter.setAnswers(question.getAnswer());
@@ -124,8 +128,6 @@ public class QuestionActivity extends ActionBarActivity {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
-
-
     }
 
     @Override
@@ -143,5 +145,41 @@ public class QuestionActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadUniversityName(final String id, final TextView name) {
+        final Firebase universityRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Universities/" + id + "/univName");
+        universityRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String universityName = dataSnapshot.getValue(String.class);
+
+                if (universityName == null || universityName.isEmpty()) {
+                    universityName = "General";
+                }
+                name.setText(universityName);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    private void loadUserName(final String id, final TextView name) {
+        final Firebase userRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Users/" + id + "/name");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String username = dataSnapshot.getValue(String.class);
+                name.setText(username);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 }
