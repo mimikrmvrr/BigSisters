@@ -75,9 +75,9 @@ public class QuestionsFragment extends Fragment {
 
             Question question = getItem(position);
             viewHolder.title.setText(question.getTitle());
-
+            loadUniversityName(question.getAbout(), viewHolder.about);
             viewHolder.time.setText(question.getTime());
-            viewHolder.about.setText(question.getAbout());
+           // viewHolder.about.setText(question.getAbout());
 
             layout.setOnClickListener(
                     new View.OnClickListener() {
@@ -95,6 +95,21 @@ public class QuestionsFragment extends Fragment {
 
         public void setQuestions(List<Question> questions) {
             this.questions = questions;
+        }
+
+        private void loadUniversityName(String id, final TextView name) {
+            final Firebase universityRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Universities/" + id + "/univName");
+            universityRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    name.setText(dataSnapshot.getValue(String.class));
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
         }
 
 
