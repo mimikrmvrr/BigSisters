@@ -1,7 +1,11 @@
 package com.bigsisters.bigsisters;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,7 +16,12 @@ public class UserProfile extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String userid = sharedPref.getString(getString(R.string.login_id),"");
+        Log.d("test", "preferences are" + sharedPref +userid);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
