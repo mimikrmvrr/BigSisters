@@ -1,6 +1,7 @@
 package com.bigsisters.bigsisters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -18,10 +19,21 @@ public class UserProfile extends ActionBarActivity {
         setContentView(R.layout.activity_user_profile);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         String userid = sharedPref.getString(getString(R.string.login_id),"");
-        Log.d("test", "preferences are" + sharedPref +userid);
+        if(userid.equals("")){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        Log.d("test", "preferences are"  +userid);
+
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
 
+        // Get the Camera instance as the activity achieves full user focus
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
