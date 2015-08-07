@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -16,35 +16,40 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        android:layout_below="@id/toolbar"/>
 
     <TextView
         android:id="@+id/about"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/title"/>
 
     <TextView
         android:id="@+id/time"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Material.Caption"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/about"/>
 
     <TextView
         android:id="@+id/text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Material.Body1"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        android:layout_below="@id/time"/>
 
     <TextView
         android:id="@+id/from"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:textAppearance="@android:style/TextAppearance.Material.Subhead"/>
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:layout_below="@id/text"/>
 
 
     <TextView
@@ -52,12 +57,29 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        android:layout_below="@id/from"/>
+
+    <Button
+        android:id="@+id/add_answer"
+        android:layout_width="fill_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:text="Add an answer"
+        android:layout_marginLeft="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
 
     <ListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/answer"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/answers_count"
+        android:layout_above="@id/add_answer"></ListView>
 
-</LinearLayout>
+
+
+</RelativeLayout>
