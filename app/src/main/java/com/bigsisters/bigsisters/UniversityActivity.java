@@ -1,8 +1,11 @@
 package com.bigsisters.bigsisters;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -34,6 +37,9 @@ public class UniversityActivity extends FragmentActivity {
 
     int currentFragment = 0;
     University university = new University();
+    boolean isStudent = false;
+    String userId = null;
+
     static final String EXTRA_ID = "com.bigsister.EXTRA_ID";
 
     @Override
@@ -41,7 +47,6 @@ public class UniversityActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_university);
-
 
 
         // Obtaining the university data
@@ -78,15 +83,22 @@ public class UniversityActivity extends FragmentActivity {
             }
         });
 
+        // TODO: read from shared preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        userId = sharedPref.getString("userId", null);
+
+        handleFaveButton(userId, id);
+
         // Setting up the first fragment
         if (findViewById(R.id.fragment_container) != null) {
-            if (savedInstanceState != null) { return;}
+            if (savedInstanceState == null) {
             Bundle args = new Bundle();
-            Log.d("stefania", "argument id is " +university.id);
+            Log.d("stefania", "argument id is " + university.id);
             args.putInt("id", university.id);
             UnivInfoFragment startFragment = new UnivInfoFragment();
             startFragment.setArguments(args);
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, startFragment).commit();
+        }
         }
 
         // Opening the website
@@ -106,7 +118,6 @@ public class UniversityActivity extends FragmentActivity {
         });
 
 
-
         // Setting up the fragment switching buttons
         Button btn1 = (Button) findViewById(R.id.button1);
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +132,9 @@ public class UniversityActivity extends FragmentActivity {
             public void onClick(View v) {switchTabs(2);}
         });
 
+        checkAttendingUniversities(userId, id);
 
+        setupRateBtn(userId, id);
     }
 
     @Override
@@ -150,6 +163,9 @@ public class UniversityActivity extends FragmentActivity {
         Log.d("stefania", "running fragment switcher " + pos);
         // check what fragment is currently active
         if (pos == currentFragment) return;
+
+        Button rate = (Button) findViewById(R.id.giveRatingBtn);
+        rate.setVisibility(View.VISIBLE);
         // if it is different from the current one, switch
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch(pos) {
@@ -162,6 +178,11 @@ public class UniversityActivity extends FragmentActivity {
                 RatingFragment rFragment = new RatingFragment();
                 transaction.replace(R.id.fragment_container, rFragment);
                 currentFragment = 1;
+                break;
+            case 3:
+                EditRatingFragment eFragment = new EditRatingFragment();
+                transaction.replace(R.id.fragment_container, eFragment);
+                currentFragment = 3;
                 break;
             default: return;
 
@@ -177,5 +198,124 @@ public class UniversityActivity extends FragmentActivity {
         ImageView imageView = (ImageView) findViewById(R.id.uniPic);
         Picasso.with(this).load(url).into(imageView);
     }
+
+    public void attendedThisUni(final int studentID, final int uniID) {
+        Firebase studentRoot = new Firebase("https://blazing-torch-4222.firebaseio.com/Users/" + studentID);
+        studentRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("current").hasChild(Integer.toString(uniID)) ||
+                        dataSnapshot.child("past").hasChild(Integer.toString(uniID))) {
+                    isStudent = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    public void handleFaveButton(final String userId, final String uniId) {
+        Log.d("stefania", "user uni " + userId + " " + uniId);
+        final String fbUrl = "https://blazing-torch-4222.firebaseio.com/Users/" + userId + "/favorites";
+        Log.d("stefania", "Firebase: " + fbUrl);
+        Firebase userFaves = new Firebase(fbUrl);
+        userFaves.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Button faveButton = (Button) findViewById(R.id.faveButton);
+                Log.d("stefania", "id " + uniId);
+                //Button rateButton = (Button) findViewById(R.id.giveRatingBtn);
+                if (dataSnapshot.hasChild(uniId)) {
+                    // already faved
+
+                    faveButton.setText("Faved");
+                    faveButton.setBackgroundColor(android.graphics.Color.RED);
+                    // setup rate button
+                    //rateButton.setVisibility(View.VISIBLE);
+                } else {
+                    // activate fave button
+                    faveButton.setText("Fave");
+                    faveButton.setBackgroundColor(android.graphics.Color.GREEN);
+                    // deactivate rate button
+                    //rateButton.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+        // create button handler - button handler calls handleFaveButton?
+        Button faveButton = (Button) findViewById(R.id.faveButton);
+        faveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Firebase favRoot = new Firebase(fbUrl);
+                favRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild(uniId)) {
+                            // remove
+                            Log.d("stefania", "remove from database");
+                            favRoot.child(uniId).setValue(null);
+
+                        } else {
+                            // add
+                            Log.d("stefania", "write to database");
+                            favRoot.child(uniId).setValue(uniId);
+                        }
+                        handleFaveButton(userId, uniId);
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+            }
+        });
+
+    }
+
+    public void checkAttendingUniversities(final String userId, final String uniId) {
+        String fbUrl = "https://blazing-torch-4222.firebaseio.com/Users/" + userId +"/universities";
+        Firebase attendRoot = new Firebase(fbUrl);
+        attendRoot.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Button rateButton = (Button) findViewById(R.id.giveRatingBtn);
+                if (dataSnapshot.hasChild(uniId)) {
+                    // button is here
+                    rateButton.setVisibility(View.VISIBLE);
+                } else {
+                    // button disappears
+                    rateButton.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+    public void setupRateBtn(final String userId, final String uniId) {
+        final Button rateBtn = (Button) findViewById(R.id.giveRatingBtn);
+        rateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //rateBtn.setVisibility(View.INVISIBLE);
+                Log.d("stefania", "Rate button");
+                switchTabs(3);
+            }
+        });
+    }
+
 
 }
