@@ -1,7 +1,9 @@
 package com.bigsisters.bigsisters;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,8 +42,17 @@ public class WriteAnswerActivity extends ActionBarActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Answer newAnswer = new Answer();
                         newAnswer.setText(text.getText().toString());
-                        newAnswer.setTime(String.format("%s", System.currentTimeMillis()));
+                        newAnswer.setTime(Long.toString(System.currentTimeMillis()));
+
+                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        String userId = sharedPref.getString("userId", null);
+
+                        newAnswer.setFrom(userId);
                         postRef.push().setValue(newAnswer);
+
+                        Intent getBackIntent = new Intent(getApplicationContext(), QuestionActivity.class);
+                        getBackIntent.putExtra(QuestionActivity.QUESTION_ID, QUESTION_ID);
+                        startActivity(getBackIntent);
                     }
 
                     @Override

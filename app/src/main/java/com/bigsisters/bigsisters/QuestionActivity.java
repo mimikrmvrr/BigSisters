@@ -34,6 +34,7 @@ import java.util.List;
  * Created by demouser on 8/6/15.
  */
 public class QuestionActivity extends ActionBarActivity {
+    public static String QUESTION_ID = "QuestionID";
     public class AnswerAdapter extends BaseAdapter {
 
         private class ViewHolder {
@@ -109,7 +110,9 @@ public class QuestionActivity extends ActionBarActivity {
         final TextView answers_count = (TextView) findViewById(R.id.answers_count);
 
         Firebase.setAndroidContext(QuestionActivity.this);
-        final Firebase questionRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Questions/question1");
+        Intent intent = getIntent();
+        final String questionId = intent.getStringExtra(QUESTION_ID);
+        final Firebase questionRef = new Firebase("https://blazing-torch-4222.firebaseio.com/Questions/" + "question1");
         questionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -129,7 +132,7 @@ public class QuestionActivity extends ActionBarActivity {
                 loadUniversityName(question.getAbout(), about);
                 text.setText(question.getText());
                 loadUserName(question.getFrom(), from);
-                time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(question.getTime())));
+              //  time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(question.getTime())));
                 answers_count.setText("" + question.getAnswer().size() + " Answers");
 
                 AnswerAdapter adapter = new AnswerAdapter();
@@ -149,7 +152,7 @@ public class QuestionActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuestionActivity.this, WriteAnswerActivity.class);
-                intent.putExtra(WriteAnswerActivity.QUESTION_ID, "question1");
+                intent.putExtra(WriteAnswerActivity.QUESTION_ID, questionId);
                 startActivity(intent);
             }
         });
