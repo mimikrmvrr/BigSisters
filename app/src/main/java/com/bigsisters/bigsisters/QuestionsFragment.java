@@ -56,7 +56,7 @@ public class QuestionsFragment extends Fragment {
         }
 
         @Override
-        public RelativeLayout getView(int position, View convertView, ViewGroup parent) {
+        public RelativeLayout getView(final int position, View convertView, ViewGroup parent) {
             RelativeLayout layout;
             ViewHolder viewHolder;
 
@@ -75,7 +75,7 @@ public class QuestionsFragment extends Fragment {
                 layout.setTag(viewHolder);
             }
 
-            Question question = getItem(position);
+            final Question question = getItem(position);
             viewHolder.title.setText(question.getTitle());
             loadUniversityName(question.getAbout(), viewHolder.about);
             viewHolder.time.setText(DateUtils.getRelativeTimeSpanString(Long.parseLong(question.getTime())));
@@ -86,6 +86,7 @@ public class QuestionsFragment extends Fragment {
                         public void onClick(View v) {
                             Log.d("mimi", "Click on question is made");
                             Intent intent = new Intent(getActivity(), QuestionActivity.class);
+                            intent.putExtra(QuestionActivity.QUESTION_ID, getItem(position).getId());
                             startActivity(intent);
                         }
                     }
@@ -144,6 +145,7 @@ public class QuestionsFragment extends Fragment {
                     question.setTime(child.child("time").getValue(String.class));
                     question.setTitle(child.child("title").getValue(String.class));
                     question.setAnswer(answers);
+                    question.setId(child.getKey());
                     questions.add(question);
                 }
 
