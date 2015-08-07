@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v4.app.FragmentActivity;
@@ -228,20 +229,23 @@ public class UniversityActivity extends FragmentActivity {
         userFaves.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Button faveButton = (Button) findViewById(R.id.faveButton);
+                ImageButton faveButton = (ImageButton) findViewById(R.id.faveButton);
                 Log.d("stefania", "id " + uniId);
                 //Button rateButton = (Button) findViewById(R.id.giveRatingBtn);
                 if (dataSnapshot.hasChild(uniId)) {
                     // already faved
 
-                    faveButton.setText("Faved");
-                    faveButton.setBackgroundColor(android.graphics.Color.RED);
+                    faveButton.setImageResource(R.drawable.heart9);
+
+                   // Drawable(finfImageById(R.drawable.heart9));
+                   // faveButton.setBackgroundColor(android.graphics.Color.RED);
                     // setup rate button
                     //rateButton.setVisibility(View.VISIBLE);
                 } else {
+                    faveButton.setImageResource(R.drawable.heart13);
                     // activate fave button
-                    faveButton.setText("Fave");
-                    faveButton.setBackgroundColor(android.graphics.Color.GREEN);
+                   // faveButton.setText("Fave");
+                  //  faveButton.setBackgroundColor(android.graphics.Color.GREEN);
                     // deactivate rate button
                     //rateButton.setVisibility(View.INVISIBLE);
                 }
@@ -254,7 +258,7 @@ public class UniversityActivity extends FragmentActivity {
         });
 
         // create button handler - button handler calls handleFaveButton?
-        Button faveButton = (Button) findViewById(R.id.faveButton);
+        ImageButton faveButton = (ImageButton) findViewById(R.id.faveButton);
         faveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
