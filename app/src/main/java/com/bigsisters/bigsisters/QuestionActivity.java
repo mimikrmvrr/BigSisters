@@ -136,6 +136,7 @@ public class QuestionActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuestionActivity.this, WriteAnswerActivity.class);
+                intent.putExtra(WriteAnswerActivity.QUESTION_ID, "question1");
                 startActivity(intent);
             }
         });
