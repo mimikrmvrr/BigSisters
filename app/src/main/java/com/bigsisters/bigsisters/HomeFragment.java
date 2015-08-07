@@ -76,7 +76,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
                 postLayout.setTag(viewHolder);
             }
 
-            Post post = getItem(position);
+            final Post post = getItem(position);
 
             loadUniversityName(post.getName(), viewHolder.name);
             loadUniversityPic(post.getName(), viewHolder.pic);
@@ -88,7 +88,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent  = new Intent(getActivity(), UniversityActivity.class);
-                    intent.putExtra(UniversityActivity.EXTRA_ID, "1");
+                    intent.putExtra(UniversityActivity.EXTRA_ID, post.getName());
                     startActivity(intent);
                 }
             });
