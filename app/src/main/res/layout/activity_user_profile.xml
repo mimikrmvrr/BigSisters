@@ -46,14 +46,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+
         android:text="Current University"
         android:id="@+id/current_uni_head"
-        />
+        android:layout_gravity="center_vertical"
+        android:paddingRight="16dp"/>
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/add186" />
+        android:src="@drawable/add186"
+        android:background="?colorPrimary"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical" />
     </LinearLayout>
 
     <ListView
@@ -62,7 +67,7 @@
         android:layout_below="@id/current_uni_head"
         android:layout_alignLeft="@id/userimg"
         android:id="@+id/current_uni_list"
-        ></ListView>
+        android:layout_gravity="center_vertical"></ListView>
 </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
@@ -79,15 +84,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:text="Past Universities"
         android:id="@+id/past_uni_head"
-        />
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:paddingRight="16dp"/>
     <ImageButton
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/add_past_uni"
-        android:src="@drawable/add186" />
+        android:src="@drawable/add186"
+        android:background="?colorPrimary"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical" />
         </LinearLayout>
     <ListView
         android:layout_width="fill_parent"
@@ -101,7 +111,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/past_uni_lo"
         android:orientation="vertical"
-        android:layout_alignLeft="@id/userimg">
+        android:layout_alignLeft="@id/userimg"
+        android:id="@+id/fave_uni_lo">
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
@@ -109,14 +120,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/userimg"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:text="Favourite Universities"
-        android:id="@+id/fave_uni_head"/>
+        android:id="@+id/fave_uni_head"
+        android:layout_gravity="center_vertical"
+        android:paddingRight="16dp"/>
             <ImageButton
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:id="@+id/add_fave_uni"
-            android:src="@drawable/add186" />
+            android:src="@drawable/add186"
+                android:background="?colorPrimary"
+                android:layout_gravity="center_vertical" />
 
         </LinearLayout>
     <ListView
